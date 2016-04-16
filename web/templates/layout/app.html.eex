@@ -12,6 +12,37 @@
   </head>
 
   <body>
+    <nav class="navbar navbar-default nacbar-fixed-top">
+      <div class="container">
+        <div class="navbar-header">
+          <a class="navbar-brand" href="#">Huginnbuilder</a>
+        </div>
+
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+          <ul class="nav navbar-nav">
+            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
+            <li><a href="#">Link</a></li>
+          </ul>
+          <ul class="nav navbar-nav navbar-right">
+            <%= if @current_user do %>
+              <li>
+                <%= link "Account", to: user_path(@conn, :show, @current_user) %>
+              </li>
+              <li>
+                <%= link "Logout", to: session_path(@conn, :delete, @current_user), method: 'delete' %>
+              </li>
+            <% else %>
+              <li>
+                <%= link "Login", to: session_path(@conn, :new) %>
+              </li>
+              <li>
+                <%= link "Register", to: user_path(@conn, :new) %>
+              </li>
+            <% end %>
+          </ul>
+        </div>
+      </div>
+    </nav>
     <div class="container">
       <header class="header">
         <nav role="navigation">

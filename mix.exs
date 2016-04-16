@@ -19,7 +19,7 @@ defmodule Huginnbuilder.Mixfile do
   def application do
     [mod: {Huginnbuilder, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :docker]]
+                    :phoenix_ecto, :postgrex, :docker, :comeonin]]
   end
 
   # Specifies which paths to compile per environment.
@@ -37,6 +37,7 @@ defmodule Huginnbuilder.Mixfile do
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
+     {:comeonin, "~> 2.4"},
      {:docker, "~> 0.0.1", git: "https://github.com/bearice/elixir-docker.git"}]
   end
 
