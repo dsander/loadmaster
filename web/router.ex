@@ -20,10 +20,12 @@ defmodule Huginnbuilder.Router do
     get "/", PageController, :index
     resources "/users", UserController, except: [:index]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
+    resources "/repositories", RepositoryController
   end
 
   # Other scopes may use custom stacks.
-  # scope "/api", Huginnbuilder do
-  #   pipe_through :api
-  # end
+  scope "/api", Huginnbuilder do
+    pipe_through :api
+    post "/webhook/:token", WebhookController, :handle
+  end
 end

@@ -1,0 +1,36 @@
+<h2>Show repository</h2>
+
+<ul>
+
+  <li>
+    <strong>Token:</strong>
+    <%= @repository.token %>
+  </li>
+
+  <li>
+    <strong>Docker user:</strong>
+    <%= @repository.docker_user %>
+  </li>
+
+  <li>
+    <strong>Docker email:</strong>
+    <%= @repository.docker_email %>
+  </li>
+
+  <li>
+    <strong>Docker password:</strong>
+    <%= @repository.docker_password %>
+  </li>
+
+  <li>
+    <strong>Build commands:</strong>
+    <%= @repository.build_commands %>
+  </li>
+<li>
+  <strong>Webhook URL</strong>
+  <%= Application.get_env(:huginnbuilder, :domain) %><%= webhook_path(@conn, :handle, @repository.token) %>
+</li>
+</ul>
+
+<%= link "Edit", to: repository_path(@conn, :edit, @repository) %>
+<%= link "Back", to: repository_path(@conn, :index) %>

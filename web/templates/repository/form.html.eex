@@ -1,0 +1,41 @@
+<%= form_for @changeset, @action, fn f -> %>
+  <%= if @changeset.action do %>
+    <div class="alert alert-danger">
+      <p>Oops, something went wrong! Please check the errors below.</p>
+    </div>
+  <% end %>
+
+  <div class="form-group">
+    <%= label f, :token, class: "control-label" %>
+    <%= text_input f, :token, class: "form-control" %>
+    <%= error_tag f, :token %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :docker_user, class: "control-label" %>
+    <%= text_input f, :docker_user, class: "form-control" %>
+    <%= error_tag f, :docker_user %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :docker_email, class: "control-label" %>
+    <%= text_input f, :docker_email, class: "form-control" %>
+    <%= error_tag f, :docker_email %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :docker_password, class: "control-label" %>
+    <%= text_input f, :docker_password, class: "form-control" %>
+    <%= error_tag f, :docker_password %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :build_commands, class: "control-label" %>
+    <%= textarea f, :build_commands, class: "form-control" %>
+    <%= error_tag f, :build_commands %>
+  </div>
+
+  <div class="form-group">
+    <%= submit "Submit", class: "btn btn-primary" %>
+  </div>
+<% end %>

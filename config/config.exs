@@ -14,6 +14,9 @@ config :huginnbuilder, Huginnbuilder.Endpoint,
   pubsub: [name: Huginnbuilder.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
+config :huginnbuilder,
+  domain: 'https://huginnbuilder.ngrok.io'
+
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

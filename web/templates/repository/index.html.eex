@@ -1,0 +1,34 @@
+<h2>Listing repositories</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Token</th>
+      <th>Docker user</th>
+      <th>Docker email</th>
+      <th>Docker password</th>
+      <th>Build commands</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for repository <- @repositories do %>
+    <tr>
+      <td><%= repository.token %></td>
+      <td><%= repository.docker_user %></td>
+      <td><%= repository.docker_email %></td>
+      <td><%= repository.docker_password %></td>
+      <td><%= repository.build_commands %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: repository_path(@conn, :show, repository), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: repository_path(@conn, :edit, repository), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: repository_path(@conn, :delete, repository), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New repository", to: repository_path(@conn, :new) %>

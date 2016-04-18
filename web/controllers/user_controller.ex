@@ -4,7 +4,7 @@ defmodule Huginnbuilder.UserController do
   alias Huginnbuilder.User
 
   plug :scrub_params, "user" when action in [:create, :update]
-  plug :authenticate when action in [:index, :show]
+  plug :authenticate_user when action in [:index, :show]
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
@@ -60,16 +60,5 @@ defmodule Huginnbuilder.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: user_path(conn, :index))
-  end
-
-  defp authenticate(conn, _opts) do
-    if conn.assigns.current_user do
-      conn
-    else
-      conn
-      |> put_flash(:error, "You must be logged in.")
-      |> redirect(to: page_path(conn, :index))
-      |> halt
-    end
   end
 end

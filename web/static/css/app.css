@@ -6,8 +6,6 @@
 
 /* Space out content a bit */
 body, form, ul, table {
-  margin-top: 20px;
-  margin-bottom: 20px;
 }
 
 /* Phoenix flash messages */
@@ -36,16 +34,6 @@ form.link, form.button {
 .marketing {
   padding-right: 15px;
   padding-left: 15px;
-}
-
-/* Customize container */
-@media (min-width: 768px) {
-  .container {
-    max-width: 730px;
-  }
-}
-.container-narrow > hr {
-  margin: 30px 0;
 }
 
 /* Main marketing message */

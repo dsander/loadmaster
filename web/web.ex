@@ -36,6 +36,7 @@ defmodule Huginnbuilder.Web do
 
       import Huginnbuilder.Router.Helpers
       import Huginnbuilder.Gettext
+      import Huginnbuilder.Auth, only: [authenticate_user: 2]
     end
   end
 

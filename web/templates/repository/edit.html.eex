@@ -1,0 +1,6 @@
+<h2>Edit repository</h2>
+
+<%= render "form.html", changeset: @changeset,
+                        action: repository_path(@conn, :update, @repository) %>
+
+<%= link "Back", to: repository_path(@conn, :index) %>
