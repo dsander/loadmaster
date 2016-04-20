@@ -65,4 +65,12 @@ defmodule Huginnbuilder.RepositoryController do
     |> put_flash(:info, "Repository deleted successfully.")
     |> redirect(to: repository_path(conn, :index))
   end
+
+  def run(conn, %{"id" => id}) do
+    repository = Repo.get!(Repository, id)
+    Huginnbuilder.Runner.build(repository.build_commands)
+    conn
+    |> put_flash(:info, "Started!!!")
+    render(conn, "run.html", repository: repository)
+  end
 end

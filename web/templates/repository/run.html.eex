@@ -1,0 +1,8 @@
+<h2>Run</h2>
+
+<div id="status"></div>
+<script>
+  $(document).ready(function () {
+    joinRepository("<%= @repository.id %>");
+  })
+</script>

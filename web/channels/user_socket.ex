@@ -2,7 +2,7 @@ defmodule Huginnbuilder.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  # channel "rooms:*", Huginnbuilder.RoomChannel
+  channel "repository:*", Huginnbuilder.RepositoryChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket

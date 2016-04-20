@@ -11,6 +11,7 @@ defmodule Huginnbuilder do
       supervisor(Huginnbuilder.Endpoint, []),
       # Start the Ecto repository
       supervisor(Huginnbuilder.Repo, []),
+      supervisor(Huginnbuilder.Runner,[%{}]),
       # Here you could define other workers and supervisors as children
       # worker(Huginnbuilder.Worker, [arg1, arg2, arg3]),
     ]

@@ -21,6 +21,7 @@ defmodule Huginnbuilder.Router do
     resources "/users", UserController, except: [:index]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/repositories", RepositoryController
+    post "/repositories/:id/run", RepositoryController, :run
   end
 
   # Other scopes may use custom stacks.

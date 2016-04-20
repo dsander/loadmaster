@@ -18,4 +18,17 @@ import "phoenix_html"
 // Local files can be imported directly using relative
 // paths "./socket" or full ones "web/static/js/socket".
 
-// import socket from "./socket"
+import socket from "./socket"
+
+window.joinRepository = function(name) {
+  let channel = socket.channel("repository:" + name, {})
+  channel.join()
+    .receive("ok", resp => { console.log("Joined successfully", resp) })
+    .receive("error", resp => { console.log("Unable to join", resp) })
+
+  channel.on("build", payload => {
+    console.log(payload)
+    if(payload.body == "") return
+    $("#status").append(payload.body + "<br>")
+  })
+}
