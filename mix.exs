@@ -19,7 +19,7 @@ defmodule Huginnbuilder.Mixfile do
   def application do
     [mod: {Huginnbuilder, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :docker, :comeonin]]
+                    :phoenix_ecto, :postgrex, :docker, :comeonin, :porcelain]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,8 @@ defmodule Huginnbuilder.Mixfile do
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.4"},
-     {:docker, "~> 0.0.1", git: "https://github.com/bearice/elixir-docker.git"}]
+     {:docker, "~> 0.0.1", git: "https://github.com/bearice/elixir-docker.git"},
+     {:porcelain, "~> 2.0"}]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

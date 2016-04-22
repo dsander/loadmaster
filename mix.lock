@@ -19,6 +19,7 @@
   "plug": {:hex, :plug, "1.1.3"},
   "poison": {:hex, :poison, "1.5.2"},
   "poolboy": {:hex, :poolboy, "1.5.1"},
+  "porcelain": {:hex, :porcelain, "2.0.1"},
   "postgrex": {:hex, :postgrex, "0.11.1"},
   "ranch": {:hex, :ranch, "1.2.1"},
   "ssl_verify_hostname": {:hex, :ssl_verify_hostname, "1.0.1"}}

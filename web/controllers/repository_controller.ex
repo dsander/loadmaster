@@ -68,7 +68,7 @@ defmodule Huginnbuilder.RepositoryController do
 
   def run(conn, %{"id" => id}) do
     repository = Repo.get!(Repository, id)
-    Huginnbuilder.Runner.build(repository.build_commands)
+    Huginnbuilder.Builder.build(repository)
     conn
     |> put_flash(:info, "Started!!!")
     render(conn, "run.html", repository: repository)
