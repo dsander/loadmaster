@@ -6,12 +6,6 @@
   <% end %>
 
   <div class="form-group">
-    <%= label f, :token, class: "control-label" %>
-    <%= text_input f, :token, class: "form-control" %>
-    <%= error_tag f, :token %>
-  </div>
-
-  <div class="form-group">
     <%= label f, :docker_user, class: "control-label" %>
     <%= text_input f, :docker_user, class: "form-control" %>
     <%= error_tag f, :docker_user %>
@@ -25,14 +19,8 @@
 
   <div class="form-group">
     <%= label f, :docker_password, class: "control-label" %>
-    <%= text_input f, :docker_password, class: "form-control" %>
+    <%= password_input f, :docker_password, class: "form-control" %>
     <%= error_tag f, :docker_password %>
-  </div>
-
-  <div class="form-group">
-    <%= label f, :build_commands, class: "control-label" %>
-    <%= textarea f, :build_commands, class: "form-control" %>
-    <%= error_tag f, :build_commands %>
   </div>
 
   <div class="form-group">

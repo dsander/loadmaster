@@ -6,8 +6,6 @@
       <th>Token</th>
       <th>Docker user</th>
       <th>Docker email</th>
-      <th>Docker password</th>
-      <th>Build commands</th>
 
       <th></th>
     </tr>
@@ -18,8 +16,6 @@
       <td><%= repository.token %></td>
       <td><%= repository.docker_user %></td>
       <td><%= repository.docker_email %></td>
-      <td><%= repository.docker_password %></td>
-      <td><%= repository.build_commands %></td>
 
       <td class="text-right">
         <%= link "Show", to: repository_path(@conn, :show, repository), class: "btn btn-default btn-xs" %>

@@ -11,7 +11,7 @@ defmodule Huginnbuilder.Builder do
 
   def handle_call({:build, build}, _from, state) do
     {:ok, pid} = Task.start_link(fn ->
-      Huginnbuilder.Runner.run(build)
+      Huginnbuilder.BuildRunner.run(build)
     end)
     {:reply, pid, state}
   end
