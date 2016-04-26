@@ -1,0 +1,34 @@
+<h2>Listing images</h2>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Repository</th>
+      <th>Name</th>
+      <th>Cache image</th>
+      <th>Dockerfile</th>
+      <th>Context</th>
+
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+<%= for image <- @images do %>
+    <tr>
+      <td><%= image.repository_id %></td>
+      <td><%= image.name %></td>
+      <td><%= image.cache_image %></td>
+      <td><%= image.dockerfile %></td>
+      <td><%= image.context %></td>
+
+      <td class="text-right">
+        <%= link "Show", to: repository_image_path(@conn, :show, @repository, image), class: "btn btn-default btn-xs" %>
+        <%= link "Edit", to: repository_image_path(@conn, :edit, @repository, image), class: "btn btn-default btn-xs" %>
+        <%= link "Delete", to: repository_image_path(@conn, :delete, @repository, image), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+      </td>
+    </tr>
+<% end %>
+  </tbody>
+</table>
+
+<%= link "New image", to: repository_image_path(@conn, :new, @repository) %>

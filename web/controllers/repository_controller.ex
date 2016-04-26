@@ -2,6 +2,8 @@ defmodule Huginnbuilder.RepositoryController do
   use Huginnbuilder.Web, :controller
 
   alias Huginnbuilder.Repository
+  alias Huginnbuilder.Build
+  alias Huginnbuilder.Job
 
   plug :scrub_params, "repository" when action in [:create, :update]
   plug :authenticate_user
@@ -67,10 +69,39 @@ defmodule Huginnbuilder.RepositoryController do
   end
 
   def run(conn, %{"id" => id}) do
-    repository = Repo.get!(Repository, id)
-    Huginnbuilder.Builder.build(repository)
+    repository =
+      Repo.get!(Repository, id)
+      |> Repo.preload(:images)
+
+    build =
+      repository
+      |> build_assoc(:builds)
+      |> Build.changeset(%{pull_request_id: 1446})
+
+    {:ok, build} = Repo.transaction fn ->
+      build = Repo.insert!(build)
+      for image <- repository.images do
+        IO.inspect(image)
+        initial_data = %{
+          login: %{state: "pending", output: []},
+          clone: %{state: "pending", output: []},
+          update_cache: %{state: "pending", output: []},
+          build: %{state: "pending", output: []},
+          push: %{state: "pending", output: []},
+        }
+        build
+        |> build_assoc(:jobs)
+        |> Job.changeset(%{image_id: image.id, state: "pending", data: initial_data})
+        |> Repo.insert!
+      end
+      build
+    end
+
+    Huginnbuilder.Builder.build(build)
+
     conn
     |> put_flash(:info, "Started!!!")
-    render(conn, "run.html", repository: repository)
+    |> redirect(to: repository_build_path(conn, :show, repository, build))
+    #render(conn, "run.html", repository: repository)
   end
 end

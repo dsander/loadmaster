@@ -26,6 +26,8 @@
         <%= link "Edit", to: repository_path(@conn, :edit, repository), class: "btn btn-default btn-xs" %>
         <%= link "Delete", to: repository_path(@conn, :delete, repository), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
         <%= link "Run", to: repository_path(@conn, :run, repository), method: :post, class: "btn btn-success btn-xs" %>
+        <%= link "Images", to: repository_image_path(@conn, :index, repository), class: "btn btn-default btn-xs" %>
+        <%= link "Builds", to: repository_build_path(@conn, :index, repository), class: "btn btn-default btn-xs" %>
       </td>
     </tr>
 <% end %>

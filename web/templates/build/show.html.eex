@@ -1,0 +1,39 @@
+<h2>Build <%= @build.id %> for pull request <%= @build.pull_request_id %></h2>
+
+<ul class="nav nav-tabs" role="tablist">
+  <%= for job <- @build.jobs do %>
+    <li role="presentation" class="<%= if job == hd(@build.jobs) do %>active<% end %>"><a href="#tab-<%= job.image.id %>" role="tab" data-toggle="tab"><%= job.image.name %></a></li>
+  <% end %>
+</ul>
+<div class="tab-content">
+  <%= for job <- @build.jobs do %>
+    <div role="tabpanel" class="tab-pane <%= if job == hd(@build.jobs) do %>active<% end %>" id="tab-<%= job.image.id %>">
+      <div class="panel-group" id="accordion<%= job.id %>" data-job-id="<%= job.id %>" role="tablist" aria-multiselectable="false">
+        <%= for step <- ["login", "clone", "update_cache", "build", "push"] do %>
+          <% data = job.data[step] %>
+          <div class="panel <%= step_status(data) %>" data-step="<%= step %>">
+            <div class="panel-heading" role="tab" id="headingOne">
+              <h4 class="panel-title">
+                <a role="button" data-toggle="collapse" data-parent="#accordion<%= job.id %>" href="#<%= step %><%= job.id %>" <%= if step == "login" do %>aria-expanded="true"<% end %> aria-controls="<%= step %><%= job.id %>">
+                  <%= step %>
+                </a>
+              </h4>
+            </div>
+            <% if length(data["output"]) > 1 do %>
+            <% end %>
+              <div id="<%= step %><%= job.id %>" class="panel-collapse collapse <%= if step == "login" do %>in<% end %>" role="tabpanel" aria-labelledby="headingOne">
+                <div class="panel-body">
+                  <pre><%= Enum.join(data["output"], "\n") %></pre>
+                </div>
+              </div>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  <% end %>
+</div>
+<script>
+  $(document).ready(function () {
+    joinBuild("<%= @build.id %>");
+  })
+</script>

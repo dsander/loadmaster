@@ -5,15 +5,14 @@ defmodule Huginnbuilder.Builder do
     GenServer.start_link(__MODULE__, initial_state, name: __MODULE__)
   end
 
-  def build(repository) do
-    GenServer.call(__MODULE__, {:build, repository})
+  def build(build) do
+    GenServer.call(__MODULE__, {:build, build})
   end
 
-  def handle_call({:build, repository}, _from, state) do
+  def handle_call({:build, build}, _from, state) do
     {:ok, pid} = Task.start_link(fn ->
-      Huginnbuilder.Runner.run(repository)
+      Huginnbuilder.Runner.run(build)
     end)
     {:reply, pid, state}
   end
-
 end

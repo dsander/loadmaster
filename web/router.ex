@@ -20,7 +20,10 @@ defmodule Huginnbuilder.Router do
     get "/", PageController, :index
     resources "/users", UserController, except: [:index]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
-    resources "/repositories", RepositoryController
+    resources "/repositories", RepositoryController do
+      resources "images", ImageController
+      resources "builds", BuildController, only: [:index, :show]
+    end
     post "/repositories/:id/run", RepositoryController, :run
   end
 

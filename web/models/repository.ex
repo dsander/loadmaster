@@ -7,6 +7,8 @@ defmodule Huginnbuilder.Repository do
     field :docker_email, :string
     field :docker_password, :string
     field :build_commands, :string
+    has_many :images, Huginnbuilder.Image
+    has_many :builds, Huginnbuilder.Build
 
     timestamps
   end
@@ -23,17 +25,15 @@ defmodule Huginnbuilder.Repository do
   def changeset(model) do
     model
     |> cast(:empty, @required_fields, @optional_fields)
-    |> IO.inspect
   end
 
   def changeset(model, params) do
     model
     |> cast(params, @required_fields, @optional_fields)
-    |> stuff
+    |> create_token
   end
 
-  def stuff(changeset) do
-    IO.inspect changeset
+  def create_token(changeset) do
     put_change(changeset, :token, random_string(32))
   end
 

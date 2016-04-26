@@ -3,6 +3,7 @@ defmodule Huginnbuilder.UserSocket do
 
   ## Channels
   channel "repository:*", Huginnbuilder.RepositoryChannel
+  channel "build:*", Huginnbuilder.BuildChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
