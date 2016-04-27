@@ -97,7 +97,7 @@ defmodule Huginnbuilder.RepositoryController do
       build
     end
 
-    Huginnbuilder.Builder.build(build)
+    Huginnbuilder.Builder.build(build, "https://github.com/cantino/huginn.git")
 
     conn
     |> put_flash(:info, "Started!!!")

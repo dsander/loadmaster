@@ -1,5 +1,5 @@
 defmodule Huginnbuilder.BuildRunner.StepState do
-  defstruct repository: nil, job: nil, build: nil, status: :ok, output: ""
+  defstruct repository: nil, job: nil, build: nil, git_remote: nil, status: :ok, output: ""
 end
 
 defmodule Huginnbuilder.BuildRunner do
@@ -9,7 +9,7 @@ defmodule Huginnbuilder.BuildRunner do
   alias Huginnbuilder.Endpoint
   import Huginnbuilder.CommandRunner
 
-  def run(build) do
+  def run(build, git_remote) do
     build = Repo.preload(build, [:repository, :jobs])
     repository = Repo.preload(build.repository, :images)
     for job <- build.jobs do
@@ -17,7 +17,7 @@ defmodule Huginnbuilder.BuildRunner do
       job = Repo.preload(job, :image)
       job = Repo.update!(Job.changeset(job, %{state: "running"}))
 
-      %StepState{repository: repository, job: job, build: build}
+      %StepState{repository: repository, job: job, build: build, git_remote: git_remote}
       |> step(:login)
       |> step(:clone)
       |> step(:update_cache)
@@ -37,7 +37,7 @@ defmodule Huginnbuilder.BuildRunner do
   def step(step_state = %StepState{status: :ok}, name = :clone) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "sleep 1; git clone --depth=1 https://github.com/cantino/huginn.git huginn")
+    |> run_command(name, "sleep 1; git clone --depth=1 #{step_state.git_remote} huginn")
     |> run_command(name, "cd huginn; git fetch --depth=1 origin pull/#{step_state.build.pull_request_id}/head:pr; git checkout pr")
     |> write_step_state(name)
   end
