@@ -1,14 +1,14 @@
-defmodule Huginnbuilder.Endpoint do
-  use Phoenix.Endpoint, otp_app: :huginnbuilder
+defmodule Loadmaster.Endpoint do
+  use Phoenix.Endpoint, otp_app: :loadmaster
 
-  socket "/socket", Huginnbuilder.UserSocket
+  socket "/socket", Loadmaster.UserSocket
 
   # Serve at "/" the static files from "priv/static" directory.
   #
   # You should set gzip to true if you are running phoenix.digest
   # when deploying your static files in production.
   plug Plug.Static,
-    at: "/", from: :huginnbuilder, gzip: false,
+    at: "/", from: :loadmaster, gzip: false,
     only: ~w(css fonts images js favicon.ico robots.txt)
 
   # Code reloading can be explicitly enabled under the
@@ -32,8 +32,8 @@ defmodule Huginnbuilder.Endpoint do
 
   plug Plug.Session,
     store: :cookie,
-    key: "_huginnbuilder_key",
+    key: "_loadmaster_key",
     signing_salt: "CytfjL3T"
 
-  plug Huginnbuilder.Router
+  plug Loadmaster.Router
 end

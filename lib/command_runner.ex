@@ -1,6 +1,6 @@
-defmodule Huginnbuilder.CommandRunner do
-  alias Huginnbuilder.BuildRunner.StepState
-  alias Huginnbuilder.Endpoint
+defmodule Loadmaster.CommandRunner do
+  alias Loadmaster.BuildRunner.StepState
+  alias Loadmaster.Endpoint
 
   def run_command(step_state = %StepState{status: :ok}, name, cmd) do
     Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: "Running: " <> cmd})

@@ -1,5 +1,5 @@
-defmodule Huginnbuilder.Router do
-  use Huginnbuilder.Web, :router
+defmodule Loadmaster.Router do
+  use Loadmaster.Web, :router
 
   pipeline :browser do
     plug :accepts, ["html"]
@@ -7,14 +7,14 @@ defmodule Huginnbuilder.Router do
     plug :fetch_flash
     plug :protect_from_forgery
     plug :put_secure_browser_headers
-    plug Huginnbuilder.Auth, repo: Huginnbuilder.Repo
+    plug Loadmaster.Auth, repo: Loadmaster.Repo
   end
 
   pipeline :api do
     plug :accepts, ["json"]
   end
 
-  scope "/", Huginnbuilder do
+  scope "/", Loadmaster do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
@@ -28,7 +28,7 @@ defmodule Huginnbuilder.Router do
   end
 
   # Other scopes may use custom stacks.
-  scope "/api", Huginnbuilder do
+  scope "/api", Loadmaster do
     pipe_through :api
     post "/webhook/:token", WebhookController, :handle
   end

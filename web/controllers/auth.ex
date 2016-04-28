@@ -1,9 +1,9 @@
-defmodule Huginnbuilder.Auth do
+defmodule Loadmaster.Auth do
   import Plug.Conn
 
   import Comeonin.Bcrypt, only: [checkpw: 2, dummy_checkpw: 0]
   import Phoenix.Controller
-  alias Huginnbuilder.Router.Helpers
+  alias Loadmaster.Router.Helpers
 
   def init(opts) do
     Keyword.fetch!(opts, :repo)
@@ -11,7 +11,7 @@ defmodule Huginnbuilder.Auth do
 
   def call(conn, repo) do
     user_id = get_session(conn, :user_id)
-    user = user_id && repo.get(Huginnbuilder.User, user_id)
+    user = user_id && repo.get(Loadmaster.User, user_id)
     assign(conn, :current_user, user)
   end
 
@@ -28,7 +28,7 @@ defmodule Huginnbuilder.Auth do
 
   def login_by_username_and_password(conn, username, given_password, opts) do
     repo = Keyword.fetch!(opts, :repo)
-    user = repo.get_by(Huginnbuilder.User, username: username)
+    user = repo.get_by(Loadmaster.User, username: username)
     cond do
       user && checkpw(given_password, user.password_hash) ->
         {:ok, login(conn, user)}

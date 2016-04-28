@@ -1,4 +1,4 @@
-defmodule Huginnbuilder.ErrorHelpers do
+defmodule Loadmaster.ErrorHelpers do
   @moduledoc """
   Conveniences for translating and building error messages.
   """
@@ -26,10 +26,10 @@ defmodule Huginnbuilder.ErrorHelpers do
     #
     #     dngettext "errors", "1 file", "%{count} files", count
     #
-    Gettext.dngettext(Huginnbuilder.Gettext, "errors", msg, msg, opts[:count], opts)
+    Gettext.dngettext(Loadmaster.Gettext, "errors", msg, msg, opts[:count], opts)
   end
 
   def translate_error(msg) do
-    Gettext.dgettext(Huginnbuilder.Gettext, "errors", msg)
+    Gettext.dgettext(Loadmaster.Gettext, "errors", msg)
   end
 end

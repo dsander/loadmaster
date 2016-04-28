@@ -1,8 +1,8 @@
-defmodule Huginnbuilder.Mixfile do
+defmodule Loadmaster.Mixfile do
   use Mix.Project
 
   def project do
-    [app: :huginnbuilder,
+    [app: :loadmaster,
      version: "0.0.1",
      elixir: "~> 1.0",
      elixirc_paths: elixirc_paths(Mix.env),
@@ -17,7 +17,7 @@ defmodule Huginnbuilder.Mixfile do
   #
   # Type `mix help compile.app` for more information.
   def application do
-    [mod: {Huginnbuilder, []},
+    [mod: {Loadmaster, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :docker, :comeonin, :porcelain]]
   end

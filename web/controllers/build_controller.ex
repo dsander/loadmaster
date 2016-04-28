@@ -1,8 +1,8 @@
-defmodule Huginnbuilder.BuildController do
-  use Huginnbuilder.Web, :controller
+defmodule Loadmaster.BuildController do
+  use Loadmaster.Web, :controller
 
-  alias Huginnbuilder.Build
-  alias Huginnbuilder.Repository
+  alias Loadmaster.Build
+  alias Loadmaster.Repository
 
   plug :authenticate_user
   plug :load_repository

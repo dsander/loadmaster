@@ -1,4 +1,4 @@
-defmodule Huginnbuilder.Builder do
+defmodule Loadmaster.Builder do
   use GenServer
 
   def start_link(initial_state) do
@@ -11,7 +11,7 @@ defmodule Huginnbuilder.Builder do
 
   def handle_call({:build, build, git_remote}, _from, state) do
     {:ok, pid} = Task.start_link(fn ->
-      Huginnbuilder.BuildRunner.run(build, git_remote)
+      Loadmaster.BuildRunner.run(build, git_remote)
     end)
     {:reply, pid, state}
   end

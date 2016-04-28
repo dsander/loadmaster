@@ -1,4 +1,4 @@
-defmodule Huginnbuilder.Repo.Migrations.RemoveBuildCommandsFromRepository do
+defmodule Loadmaster.Repo.Migrations.RemoveBuildCommandsFromRepository do
   use Ecto.Migration
 
   def change do

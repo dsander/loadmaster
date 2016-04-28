@@ -1,21 +1,21 @@
-defmodule Huginnbuilder.ErrorViewTest do
-  use Huginnbuilder.ConnCase, async: true
+defmodule Loadmaster.ErrorViewTest do
+  use Loadmaster.ConnCase, async: true
 
   # Bring render/3 and render_to_string/3 for testing custom views
   import Phoenix.View
 
   test "renders 404.html" do
-    assert render_to_string(Huginnbuilder.ErrorView, "404.html", []) ==
+    assert render_to_string(Loadmaster.ErrorView, "404.html", []) ==
            "Page not found"
   end
 
   test "render 500.html" do
-    assert render_to_string(Huginnbuilder.ErrorView, "500.html", []) ==
+    assert render_to_string(Loadmaster.ErrorView, "500.html", []) ==
            "Server internal error"
   end
 
   test "render any other" do
-    assert render_to_string(Huginnbuilder.ErrorView, "505.html", []) ==
+    assert render_to_string(Loadmaster.ErrorView, "505.html", []) ==
            "Server internal error"
   end
 end

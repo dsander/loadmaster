@@ -1,5 +1,5 @@
-defmodule Huginnbuilder.BuildChannel do
-  use Huginnbuilder.Web, :channel
+defmodule Loadmaster.BuildChannel do
+  use Loadmaster.Web, :channel
 
   def join("build:" <> id, _params, socket) do
     {:ok, socket}

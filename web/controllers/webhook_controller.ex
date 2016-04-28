@@ -1,9 +1,9 @@
-defmodule Huginnbuilder.WebhookController do
-  use Huginnbuilder.Web, :controller
+defmodule Loadmaster.WebhookController do
+  use Loadmaster.Web, :controller
 
-  alias Huginnbuilder.Repository
-  alias Huginnbuilder.Build
-  alias Huginnbuilder.Job
+  alias Loadmaster.Repository
+  alias Loadmaster.Build
+  alias Loadmaster.Job
 
   def handle(conn, %{"token" => token, "action" => action, "pull_request" => pull_request} = params) when action in ["opened", "synchronize", "reopened"] do
     repository =
@@ -34,7 +34,7 @@ defmodule Huginnbuilder.WebhookController do
       build
     end
 
-    Huginnbuilder.Builder.build(build, params["repository"]["clone_url"])
+    Loadmaster.Builder.build(build, params["repository"]["clone_url"])
 
     conn
     |> put_status(200)
@@ -51,7 +51,7 @@ defmodule Huginnbuilder.WebhookController do
     data = Poison.encode!(params)
     {epoch, sec, msec} = :erlang.timestamp()
     filename = Integer.to_string(epoch) <> Integer.to_string(sec) <> Integer.to_string(msec) <> ".json"
-    File.write!(Huginnbuilder.Endpoint.config(:root) <> "/test/fixtures/" <> filename, data)
+    File.write!(Loadmaster.Endpoint.config(:root) <> "/test/fixtures/" <> filename, data)
     conn
     |> put_status(501)
     |> json(:ok)

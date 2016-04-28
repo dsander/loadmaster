@@ -1,5 +1,5 @@
-defmodule Huginnbuilder.ErrorView do
-  use Huginnbuilder.Web, :view
+defmodule Loadmaster.ErrorView do
+  use Loadmaster.Web, :view
 
   def render("404.html", _assigns) do
     "Page not found"

@@ -1,13 +1,13 @@
-defmodule Huginnbuilder.BuildRunner.StepState do
+defmodule Loadmaster.BuildRunner.StepState do
   defstruct repository: nil, job: nil, build: nil, git_remote: nil, status: :ok, output: ""
 end
 
-defmodule Huginnbuilder.BuildRunner do
-  alias Huginnbuilder.Repo
-  alias Huginnbuilder.BuildRunner.StepState
-  alias Huginnbuilder.Job
-  alias Huginnbuilder.Endpoint
-  import Huginnbuilder.CommandRunner
+defmodule Loadmaster.BuildRunner do
+  alias Loadmaster.Repo
+  alias Loadmaster.BuildRunner.StepState
+  alias Loadmaster.Job
+  alias Loadmaster.Endpoint
+  import Loadmaster.CommandRunner
 
   def run(build, git_remote) do
     build = Repo.preload(build, [:repository, :jobs])

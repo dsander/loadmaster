@@ -1,7 +1,7 @@
-defmodule Huginnbuilder.JobTest do
-  use Huginnbuilder.ModelCase
+defmodule Loadmaster.JobTest do
+  use Loadmaster.ModelCase
 
-  alias Huginnbuilder.Job
+  alias Loadmaster.Job
 
   @valid_attrs %{data: %{}, state: "some content"}
   @invalid_attrs %{}

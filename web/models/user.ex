@@ -1,5 +1,5 @@
-defmodule Huginnbuilder.User do
-  use Huginnbuilder.Web, :model
+defmodule Loadmaster.User do
+  use Loadmaster.Web, :model
 
   schema "users" do
     field :username, :string

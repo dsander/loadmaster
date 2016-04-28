@@ -1,8 +1,8 @@
-defmodule Huginnbuilder.ImageController do
-  use Huginnbuilder.Web, :controller
+defmodule Loadmaster.ImageController do
+  use Loadmaster.Web, :controller
 
-  alias Huginnbuilder.Image
-  alias Huginnbuilder.Repository
+  alias Loadmaster.Image
+  alias Loadmaster.Repository
 
   plug :scrub_params, "image" when action in [:create, :update]
   plug :authenticate_user

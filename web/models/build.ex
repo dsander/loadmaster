@@ -1,10 +1,10 @@
-defmodule Huginnbuilder.Build do
-  use Huginnbuilder.Web, :model
+defmodule Loadmaster.Build do
+  use Loadmaster.Web, :model
 
   schema "builds" do
     field :pull_request_id, :integer
-    belongs_to :repository, Huginnbuilder.Repository
-    has_many :jobs, Huginnbuilder.Job
+    belongs_to :repository, Loadmaster.Repository
+    has_many :jobs, Loadmaster.Job
 
     timestamps
   end

@@ -1,7 +1,7 @@
-defmodule Huginnbuilder.ImageTest do
-  use Huginnbuilder.ModelCase
+defmodule Loadmaster.ImageTest do
+  use Loadmaster.ModelCase
 
-  alias Huginnbuilder.Image
+  alias Loadmaster.Image
 
   @valid_attrs %{cache_image: "some content", context: "some content", dockerfile: "some content", name: "some content"}
   @invalid_attrs %{}

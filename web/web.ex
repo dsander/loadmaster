@@ -1,12 +1,12 @@
-defmodule Huginnbuilder.Web do
+defmodule Loadmaster.Web do
   @moduledoc """
   A module that keeps using definitions for controllers,
   views and so on.
 
   This can be used in your application as:
 
-      use Huginnbuilder.Web, :controller
-      use Huginnbuilder.Web, :view
+      use Loadmaster.Web, :controller
+      use Loadmaster.Web, :view
 
   The definitions below will be executed for every view,
   controller, etc, so keep them short and clean, focused
@@ -30,13 +30,13 @@ defmodule Huginnbuilder.Web do
     quote do
       use Phoenix.Controller
 
-      alias Huginnbuilder.Repo
+      alias Loadmaster.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
 
-      import Huginnbuilder.Router.Helpers
-      import Huginnbuilder.Gettext
-      import Huginnbuilder.Auth, only: [authenticate_user: 2]
+      import Loadmaster.Router.Helpers
+      import Loadmaster.Gettext
+      import Loadmaster.Auth, only: [authenticate_user: 2]
     end
   end
 
@@ -50,9 +50,9 @@ defmodule Huginnbuilder.Web do
       # Use all HTML functionality (forms, tags, etc)
       use Phoenix.HTML
 
-      import Huginnbuilder.Router.Helpers
-      import Huginnbuilder.ErrorHelpers
-      import Huginnbuilder.Gettext
+      import Loadmaster.Router.Helpers
+      import Loadmaster.ErrorHelpers
+      import Loadmaster.Gettext
     end
   end
 
@@ -66,10 +66,10 @@ defmodule Huginnbuilder.Web do
     quote do
       use Phoenix.Channel
 
-      alias Huginnbuilder.Repo
+      alias Loadmaster.Repo
       import Ecto
       import Ecto.Query, only: [from: 1, from: 2]
-      import Huginnbuilder.Gettext
+      import Loadmaster.Gettext
     end
   end
 

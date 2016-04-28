@@ -1,11 +1,11 @@
-defmodule Huginnbuilder.Job do
-  use Huginnbuilder.Web, :model
+defmodule Loadmaster.Job do
+  use Loadmaster.Web, :model
 
   schema "jobs" do
     field :state, :string
     field :data, :map
-    belongs_to :build, Huginnbuilder.Build
-    belongs_to :image, Huginnbuilder.Image
+    belongs_to :build, Loadmaster.Build
+    belongs_to :image, Loadmaster.Image
 
     timestamps
   end

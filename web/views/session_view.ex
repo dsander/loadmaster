@@ -1,3 +1,3 @@
-defmodule Huginnbuilder.SessionView do
-  use Huginnbuilder.Web, :view
+defmodule Loadmaster.SessionView do
+  use Loadmaster.Web, :view
 end

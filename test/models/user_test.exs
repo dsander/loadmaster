@@ -1,7 +1,7 @@
-defmodule Huginnbuilder.UserTest do
-  use Huginnbuilder.ModelCase
+defmodule Loadmaster.UserTest do
+  use Loadmaster.ModelCase
 
-  alias Huginnbuilder.User
+  alias Loadmaster.User
 
   @valid_attrs %{email: "some content", password_hash: "some content", username: "some content"}
   @invalid_attrs %{}

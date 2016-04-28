@@ -1,7 +1,7 @@
-defmodule Huginnbuilder.BuildTest do
-  use Huginnbuilder.ModelCase
+defmodule Loadmaster.BuildTest do
+  use Loadmaster.ModelCase
 
-  alias Huginnbuilder.Build
+  alias Loadmaster.Build
 
   @valid_attrs %{pull_request_id: 42}
   @invalid_attrs %{}

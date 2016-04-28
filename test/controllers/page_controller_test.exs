@@ -1,5 +1,5 @@
-defmodule Huginnbuilder.PageControllerTest do
-  use Huginnbuilder.ConnCase
+defmodule Loadmaster.PageControllerTest do
+  use Loadmaster.ConnCase
 
   test "GET /", %{conn: conn} do
     conn = get conn, "/"

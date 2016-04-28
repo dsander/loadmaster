@@ -1,3 +1,3 @@
-defmodule Huginnbuilder.UserView do
-  use Huginnbuilder.Web, :view
+defmodule Loadmaster.UserView do
+  use Loadmaster.Web, :view
 end

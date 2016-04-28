@@ -1,4 +1,4 @@
-defmodule Huginnbuilder.Repo.Migrations.CreateRepository do
+defmodule Loadmaster.Repo.Migrations.CreateRepository do
   use Ecto.Migration
 
   def change do

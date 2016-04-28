@@ -1,3 +1,3 @@
-defmodule Huginnbuilder.LayoutViewTest do
-  use Huginnbuilder.ConnCase, async: true
+defmodule Loadmaster.LayoutViewTest do
+  use Loadmaster.ConnCase, async: true
 end

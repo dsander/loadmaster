@@ -1,13 +1,13 @@
-defmodule Huginnbuilder.Image do
-  use Huginnbuilder.Web, :model
+defmodule Loadmaster.Image do
+  use Loadmaster.Web, :model
 
   schema "images" do
     field :name, :string
     field :cache_image, :string
     field :dockerfile, :string
     field :context, :string
-    belongs_to :repository, Huginnbuilder.Repository
-    has_many :jobs, Huginnbuilder.Job
+    belongs_to :repository, Loadmaster.Repository
+    has_many :jobs, Loadmaster.Job
 
     timestamps
   end

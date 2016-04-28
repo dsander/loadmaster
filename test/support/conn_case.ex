@@ -1,4 +1,4 @@
-defmodule Huginnbuilder.ConnCase do
+defmodule Loadmaster.ConnCase do
   @moduledoc """
   This module defines the test case to be used by
   tests that require setting up a connection.
@@ -20,21 +20,21 @@ defmodule Huginnbuilder.ConnCase do
       # Import conveniences for testing with connections
       use Phoenix.ConnTest
 
-      alias Huginnbuilder.Repo
+      alias Loadmaster.Repo
       import Ecto
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
 
-      import Huginnbuilder.Router.Helpers
+      import Loadmaster.Router.Helpers
 
       # The default endpoint for testing
-      @endpoint Huginnbuilder.Endpoint
+      @endpoint Loadmaster.Endpoint
     end
   end
 
   setup tags do
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Huginnbuilder.Repo, [])
+      Ecto.Adapters.SQL.restart_test_transaction(Loadmaster.Repo, [])
     end
 
     {:ok, conn: Phoenix.ConnTest.conn()}

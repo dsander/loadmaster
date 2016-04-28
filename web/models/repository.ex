@@ -1,13 +1,13 @@
-defmodule Huginnbuilder.Repository do
-  use Huginnbuilder.Web, :model
+defmodule Loadmaster.Repository do
+  use Loadmaster.Web, :model
 
   schema "repositories" do
     field :token, :string
     field :docker_user, :string
     field :docker_email, :string
     field :docker_password, :string
-    has_many :images, Huginnbuilder.Image
-    has_many :builds, Huginnbuilder.Build
+    has_many :images, Loadmaster.Image
+    has_many :builds, Loadmaster.Build
 
     timestamps
   end

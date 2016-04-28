@@ -1,9 +1,9 @@
-defmodule Huginnbuilder.UserSocket do
+defmodule Loadmaster.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "repository:*", Huginnbuilder.RepositoryChannel
-  channel "build:*", Huginnbuilder.BuildChannel
+  channel "repository:*", Loadmaster.RepositoryChannel
+  channel "build:*", Loadmaster.BuildChannel
 
   ## Transports
   transport :websocket, Phoenix.Transports.WebSocket
@@ -31,7 +31,7 @@ defmodule Huginnbuilder.UserSocket do
   # Would allow you to broadcast a "disconnect" event and terminate
   # all active sockets and channels for a given user:
   #
-  #     Huginnbuilder.Endpoint.broadcast("users_socket:#{user.id}", "disconnect", %{})
+  #     Loadmaster.Endpoint.broadcast("users_socket:#{user.id}", "disconnect", %{})
   #
   # Returning `nil` makes this socket anonymous.
   def id(_socket), do: nil

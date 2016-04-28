@@ -1,9 +1,9 @@
-defmodule Huginnbuilder.RepositoryController do
-  use Huginnbuilder.Web, :controller
+defmodule Loadmaster.RepositoryController do
+  use Loadmaster.Web, :controller
 
-  alias Huginnbuilder.Repository
-  alias Huginnbuilder.Build
-  alias Huginnbuilder.Job
+  alias Loadmaster.Repository
+  alias Loadmaster.Build
+  alias Loadmaster.Job
 
   plug :scrub_params, "repository" when action in [:create, :update]
   plug :authenticate_user
@@ -97,7 +97,7 @@ defmodule Huginnbuilder.RepositoryController do
       build
     end
 
-    Huginnbuilder.Builder.build(build, "https://github.com/cantino/huginn.git")
+    Loadmaster.Builder.build(build, "https://github.com/cantino/huginn.git")
 
     conn
     |> put_flash(:info, "Started!!!")

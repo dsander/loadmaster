@@ -6,16 +6,16 @@
 use Mix.Config
 
 # Configures the endpoint
-config :huginnbuilder, Huginnbuilder.Endpoint,
+config :loadmaster, Loadmaster.Endpoint,
   url: [host: "localhost"],
   root: Path.dirname(__DIR__),
   secret_key_base: "pF8F8jg/x2RDIUSZI1172EViDR0MUZ6JU/F7wFRW7fWzF+LNFGtWXZKHC0O4s6xq",
   render_errors: [accepts: ~w(html json)],
-  pubsub: [name: Huginnbuilder.PubSub,
+  pubsub: [name: Loadmaster.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :huginnbuilder,
-  domain: 'https://huginnbuilder.ngrok.io'
+config :loadmaster,
+  domain: 'https://loadmaster.ngrok.io'
 
 # Configures Elixir's Logger
 config :logger, :console,

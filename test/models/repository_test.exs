@@ -1,7 +1,7 @@
-defmodule Huginnbuilder.RepositoryTest do
-  use Huginnbuilder.ModelCase
+defmodule Loadmaster.RepositoryTest do
+  use Loadmaster.ModelCase
 
-  alias Huginnbuilder.Repository
+  alias Loadmaster.Repository
 
   @valid_attrs %{build_commands: "some content", docker_email: "some content", docker_password: "some content", docker_user: "some content", token: "some content"}
   @invalid_attrs %{}
