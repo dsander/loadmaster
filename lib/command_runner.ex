@@ -3,7 +3,10 @@ defmodule Loadmaster.CommandRunner do
   alias Loadmaster.Endpoint
 
   def run_command(step_state = %StepState{status: :ok}, name, cmd) do
-    Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: "Running: " <> cmd})
+    unless step_state.no_cmd_echo do
+      step_state = %{ step_state | output: "Running: " <> cmd }
+      Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: "Running: " <> cmd})
+    end
     Task.async(fn ->
       Porcelain.spawn_shell("cd builds;" <> cmd <> " 2>&1",
                               in: :receive, out: {:send, self()}, err: {:send, self()})

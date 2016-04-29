@@ -1,5 +1,5 @@
 defmodule Loadmaster.BuildRunner.StepState do
-  defstruct repository: nil, job: nil, build: nil, git_remote: nil, status: :ok, output: ""
+  defstruct repository: nil, job: nil, build: nil, git_remote: nil, status: :ok, output: "", no_cmd_echo: false
 end
 
 defmodule Loadmaster.BuildRunner do
@@ -31,6 +31,8 @@ defmodule Loadmaster.BuildRunner do
   def step(step_state = %StepState{status: :ok}, name = :login) do
     step_state
     |> start_step_processing(name)
+    |> Map.put(:no_cmd_echo, true)
+    |> run_command(name, "docker login -u #{step_state.repository.docker_user} -p #{step_state.repository.docker_password}")
     |> write_step_state(name)
   end
 
@@ -59,6 +61,7 @@ defmodule Loadmaster.BuildRunner do
   def step(step_state = %StepState{status: :ok}, name = :push) do
     step_state
     |> start_step_processing(name)
+    |> run_command(name, "docker push #{step_state.job.image.name}:pr-#{step_state.build.pull_request_id}")
     |> write_step_state(name)
   end
 
@@ -84,6 +87,6 @@ defmodule Loadmaster.BuildRunner do
     data = put_in(step_state.job.data, [name], %{state: value, output: String.split(step_state.output, "\n")})
     job = Repo.update!(Job.changeset(step_state.job, %{data: data}))
     Endpoint.broadcast("build:#{step_state.build.id}", "update_state", %{job_id: step_state.job.id, step: name, value: value})
-    %StepState{ step_state | job: job, output: "" }
+    %StepState{ step_state | job: job, output: "", no_cmd_echo: false }
   end
 end
