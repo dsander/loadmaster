@@ -24,6 +24,7 @@ defmodule Loadmaster.CommandRunner do
       {^pid, :data, _, data} ->
         data
         |> String.split("\n")
+        |> Enum.reject(fn(string) -> String.strip(string) == "" end)
         |> Enum.each(fn(row) -> Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: row}) end)
         loop(proc, name, step_state, output <> data)
       {^pid, :result, %Porcelain.Result{status: 0}} ->
