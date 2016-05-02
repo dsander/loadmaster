@@ -9,7 +9,7 @@
   <%= for job <- @build.jobs do %>
     <div role="tabpanel" class="tab-pane <%= if job == hd(@build.jobs) do %>active<% end %>" id="tab-<%= job.image.id %>">
       <div class="panel-group" id="accordion<%= job.id %>" data-job-id="<%= job.id %>" role="tablist" aria-multiselectable="false">
-        <%= for step <- ["login", "clone", "update_cache", "build", "push"] do %>
+        <%= for step <- ["setup", "login", "clone", "update_cache", "build", "push", "teardown"] do %>
           <% data = job.data[step] %>
           <div class="panel <%= step_status(data) %>" data-step="<%= step %>">
             <div class="panel-heading" role="tab" id="headingOne">

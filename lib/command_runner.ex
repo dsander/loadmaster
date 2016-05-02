@@ -2,12 +2,15 @@ defmodule Loadmaster.CommandRunner do
   alias Loadmaster.BuildRunner.StepState
   alias Loadmaster.Endpoint
 
-  def run_command(step_state = %StepState{status: :ok}, name, cmd) do
-    unless step_state.no_cmd_echo do
+  def run_command(step_state = %StepState{status: :ok}, name, cmd, options \\ %{}) do
+    if Map.get(options, :echo_cmd, true) do
       step_state = %{ step_state | output: "Running: " <> cmd }
       Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: "Running: " <> cmd})
     end
     Task.async(fn ->
+      if Map.get(options, :in_docker, true) do
+        cmd = "docker exec #{container_name(step_state)} sh -c \"#{cmd}\""
+      end
       Porcelain.spawn_shell("cd builds;" <> cmd <> " 2>&1",
                               in: :receive, out: {:send, self()}, err: {:send, self()})
       |> loop(name, step_state)
@@ -15,8 +18,12 @@ defmodule Loadmaster.CommandRunner do
     |> Task.await(1200_000)
   end
 
-  def run_command(step_state = %StepState{status: :error}, _, _) do
+  def run_command(step_state = %StepState{status: :error}, _, _, _) do
     step_state
+  end
+
+  def container_name(step_state) do
+    "loadmaster-job-#{step_state.job.id}"
   end
 
   defp loop(%Porcelain.Process{pid: pid} = proc, name, step_state, output \\ "") do

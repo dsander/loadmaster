@@ -20,11 +20,13 @@ defmodule Loadmaster.WebhookController do
       for image <- repository.images do
         IO.inspect(image)
         initial_data = %{
+          setup: %{state: "pending", output: []},
           login: %{state: "pending", output: []},
           clone: %{state: "pending", output: []},
           update_cache: %{state: "pending", output: []},
           build: %{state: "pending", output: []},
           push: %{state: "pending", output: []},
+          teardown: %{state: "pending", output: []},
         }
         build
         |> build_assoc(:jobs)
