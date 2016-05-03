@@ -23,8 +23,8 @@ defmodule Loadmaster.Router do
     resources "/repositories", RepositoryController do
       resources "images", ImageController, except: [:show]
       resources "builds", BuildController, only: [:index, :show]
+      post "/builds/:id/run", BuildController, :run
     end
-    post "/repositories/:id/run", RepositoryController, :run
   end
 
   # Other scopes may use custom stacks.

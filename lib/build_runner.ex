@@ -5,22 +5,26 @@ end
 defmodule Loadmaster.BuildRunner do
   alias Loadmaster.Repo
   alias Loadmaster.BuildRunner.StepState
-  alias Loadmaster.Job
   alias Loadmaster.Endpoint
+  alias Loadmaster.Build
+  alias Loadmaster.Job
   import Loadmaster.CommandRunner
 
-  def run(build, git_remote) do
-    build = Repo.preload(build, [:repository, :jobs])
+  def run(build_id) do
+    build =
+      Repo.get!(Build, build_id)
+      |> Repo.preload([:repository, :jobs])
     repository = Repo.preload(build.repository, :images)
+
     for job <- build.jobs do
       job = Repo.preload(job, :image)
       job = Repo.update!(Job.changeset(job, %{state: "running"}))
 
-      %StepState{repository: repository, job: job, build: build, git_remote: git_remote}
+      %StepState{repository: repository, job: job, build: build, git_remote: build.git_remote}
       |> step(:setup)
       |> step(:login)
       |> step(:clone)
-      |> step(:update_cache)
+      #|> step(:update_cache)
       |> step(:build)
       |> step(:push)
       |> step(:teardown)

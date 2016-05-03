@@ -3,13 +3,14 @@ defmodule Loadmaster.Build do
 
   schema "builds" do
     field :pull_request_id, :integer
+    field :git_remote, :string
     belongs_to :repository, Loadmaster.Repository
     has_many :jobs, Loadmaster.Job
 
     timestamps
   end
 
-  @required_fields ~w(pull_request_id repository_id)
+  @required_fields ~w(pull_request_id repository_id git_remote)
   @optional_fields ~w()
 
   @doc """

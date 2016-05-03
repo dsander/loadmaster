@@ -67,43 +67,4 @@ defmodule Loadmaster.RepositoryController do
     |> put_flash(:info, "Repository deleted successfully.")
     |> redirect(to: repository_path(conn, :index))
   end
-
-  def run(conn, %{"id" => id}) do
-    repository =
-      Repo.get!(Repository, id)
-      |> Repo.preload(:images)
-
-    build =
-      repository
-      |> build_assoc(:builds)
-      |> Build.changeset(%{pull_request_id: 1446})
-
-    {:ok, build} = Repo.transaction fn ->
-      build = Repo.insert!(build)
-      for image <- repository.images do
-        IO.inspect(image)
-        initial_data = %{
-          setup: %{state: "pending", output: []},
-          login: %{state: "pending", output: []},
-          clone: %{state: "pending", output: []},
-          update_cache: %{state: "pending", output: []},
-          build: %{state: "pending", output: []},
-          push: %{state: "pending", output: []},
-          teardown: %{state: "pending", output: []},
-        }
-        build
-        |> build_assoc(:jobs)
-        |> Job.changeset(%{image_id: image.id, state: "pending", data: initial_data})
-        |> Repo.insert!
-      end
-      build
-    end
-
-    Loadmaster.Builder.build(build, "https://github.com/cantino/huginn.git")
-
-    conn
-    |> put_flash(:info, "Started!!!")
-    |> redirect(to: repository_build_path(conn, :show, repository, build))
-    #render(conn, "run.html", repository: repository)
-  end
 end

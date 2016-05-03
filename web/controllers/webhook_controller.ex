@@ -13,7 +13,7 @@ defmodule Loadmaster.WebhookController do
     build =
       repository
       |> build_assoc(:builds)
-      |> Build.changeset(%{pull_request_id: pull_request["number"]})
+      |> Build.changeset(%{pull_request_id: pull_request["number"], git_remote: params["repository"]["clone_url"]})
 
     {:ok, build} = Repo.transaction fn ->
       build = Repo.insert!(build)
@@ -36,7 +36,7 @@ defmodule Loadmaster.WebhookController do
       build
     end
 
-    Loadmaster.Builder.build(build, params["repository"]["clone_url"])
+    Loadmaster.Builder.build(build.id)
 
     conn
     |> put_status(200)
