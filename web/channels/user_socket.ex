@@ -2,7 +2,6 @@ defmodule Loadmaster.UserSocket do
   use Phoenix.Socket
 
   ## Channels
-  channel "repository:*", Loadmaster.RepositoryChannel
   channel "build:*", Loadmaster.BuildChannel
 
   ## Transports

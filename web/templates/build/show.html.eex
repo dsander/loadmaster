@@ -1,4 +1,4 @@
-<h2>Build <%= @build.id %> for pull request <%= @build.pull_request_id %></h2>
+<h2 data-build-id="<%= @build.id %>">Build <%= @build.id %> for pull request <%= @build.pull_request_id %></h2>
 
 <ul class="nav nav-tabs" role="tablist">
   <%= for job <- @build.jobs do %>
@@ -32,8 +32,3 @@
     </div>
   <% end %>
 </div>
-<script>
-  $(document).ready(function () {
-    joinBuild("<%= @build.id %>");
-  })
-</script>
