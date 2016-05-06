@@ -1,0 +1,25 @@
+version: "2"
+services:
+  db:
+    image: "postgres:9.5"
+    restart: always
+    environment:
+      POSTGRES_USER: loadmaster
+      POSTGRES_PASSWORD: loadmaster
+      POSTGRES_DB: loadmaster_prod
+    volumes:
+      - dbdata:/var/lib/postgres
+
+  web:
+    image: "local/loadmaster:0.0.1"
+    restart: always
+    environment:
+      PORT: "4000"
+      SECRET_KEY_BASE: "changeme"
+    ports:
+      - "4000:4000"
+    links:
+      - "db:db"
+volumes:
+  dbdata:
+    driver: local

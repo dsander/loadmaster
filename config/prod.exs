@@ -13,11 +13,26 @@ use Mix.Config
 # which you typically run after static files are built.
 config :loadmaster, Loadmaster.Endpoint,
   http: [port: {:system, "PORT"}],
-  url: [host: "example.com", port: 80],
-  cache_static_manifest: "priv/static/manifest.json"
+  url: [host: "localhost"],
+  cache_static_manifest: "priv/static/manifest.json",
+  server: true
 
 # Do not print debug messages in production
 config :logger, level: :info
+
+config :loadmaster, Loadmaster.Repo,
+  adapter: Ecto.Adapters.Postgres,
+  hostname: System.get_env("DB_HOST") || "db",
+  username: System.get_env("DB_USER") || "loadmaster",
+  password: System.get_env("DB_PASSWORD") || "loadmaster",
+  database: System.get_env("DATABASE_NAME") || "loadmaster_prod",
+  pool_size: 20
+
+config :loadmaster, Loadmaster.Endpoint,
+  secret_key_base: System.get_env("SECRET_KEY_BASE")
+
+config :loadmaster,
+  migrate_on_boot: true
 
 # ## SSL Support
 #

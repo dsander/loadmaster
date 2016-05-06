@@ -19,7 +19,7 @@ defmodule Loadmaster.Mixfile do
   def application do
     [mod: {Loadmaster, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :docker, :comeonin, :porcelain]]
+                    :phoenix_ecto, :postgrex, :comeonin, :porcelain]]
   end
 
   # Specifies which paths to compile per environment.
@@ -38,7 +38,7 @@ defmodule Loadmaster.Mixfile do
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.4"},
-     {:docker, "~> 0.0.1", git: "https://github.com/bearice/elixir-docker.git"},
+     {:exrm, "~> 1.0.4"},
      {:porcelain, "~> 2.0"}]
   end
 

@@ -19,7 +19,19 @@ defmodule Loadmaster do
     # See http://elixir-lang.org/docs/stable/elixir/Supervisor.html
     # for other strategies and supported options
     opts = [strategy: :one_for_one, name: Loadmaster.Supervisor]
-    Supervisor.start_link(children, opts)
+    start_link = Supervisor.start_link(children, opts)
+
+    if Application.get_env(:loadmaster, :migrate_on_boot) && System.get_env("DO_NOT_MIGRATE") == nil do
+      migrate
+    end
+
+    start_link
+  end
+
+  defp migrate do
+    migrations = Path.join(["#{:code.priv_dir(:loadmaster)}", "repo", "migrations"])
+    IO.puts "######### running migrations..."
+    Ecto.Migrator.run(Loadmaster.Repo, migrations, :up, all: true)
   end
 
   # Tell Phoenix to update the endpoint configuration
