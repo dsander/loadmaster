@@ -12,7 +12,7 @@ defmodule Loadmaster.User do
   end
 
   @required_fields ~w(username email password)
-  @optional_fields ~w()
+  @optional_fields ~w(invitation_token)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
