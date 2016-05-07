@@ -24,4 +24,12 @@ defmodule Loadmaster.Build do
     |> cast(params, @required_fields, @optional_fields)
     |> assoc_constraint(:repository)
   end
+
+  def for_repository(query, repository_id) do
+    from p in query, where: p.repository_id == ^repository_id
+  end
+
+  def sorted(query) do
+    from p in query, order_by: [desc: :id]
+  end
 end

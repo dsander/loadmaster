@@ -18,7 +18,7 @@ defmodule Loadmaster.Router do
     pipe_through :browser # Use the default browser stack
 
     get "/", PageController, :index
-    resources "/users", UserController, except: [:index]
+    resources "/users", UserController, except: [:index, :show]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/repositories", RepositoryController do
       resources "images", ImageController, except: [:show]

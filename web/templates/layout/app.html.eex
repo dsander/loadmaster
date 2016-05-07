@@ -15,12 +15,11 @@
     <nav class="navbar navbar-default nacbar-fixed-top">
       <div class="container">
         <div class="navbar-header">
-          <a class="navbar-brand" href="#">Loadmaster</a>
+          <a class="navbar-brand" href="/">Loadmaster</a>
         </div>
 
         <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
           <ul class="nav navbar-nav">
-            <li class="active"><a href="#">Link <span class="sr-only">(current)</span></a></li>
             <li>
               <%= link "Repositories", to: repository_path(@conn, :index) %>
             </li>
@@ -28,10 +27,10 @@
           <ul class="nav navbar-nav navbar-right">
             <%= if @current_user do %>
               <li>
-                <%= link "Account", to: user_path(@conn, :show, @current_user) %>
+                <%= link "Account", to: user_path(@conn, :edit, @current_user) %>
               </li>
               <li>
-                <%= link "Logout", to: session_path(@conn, :delete, @current_user), method: 'delete' %>
+                <%= link "Logout", to: session_path(@conn, :delete, @current_user), method: 'delete', class: "navbar-text" %>
               </li>
             <% else %>
               <li>

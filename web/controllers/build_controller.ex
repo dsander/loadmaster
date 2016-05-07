@@ -5,21 +5,26 @@ defmodule Loadmaster.BuildController do
   alias Loadmaster.Repository
   alias Loadmaster.Job
 
-  plug :authenticate_user, except: :run
-  plug :load_repository
+  plug :authenticate_user
 
-  def index(conn, _params, repository) do
-    render(conn, "index.html", builds: repository.builds)
+  def index(conn, %{"repository_id" => repository_id}) do
+    builds =
+      Build
+      |> Build.for_repository(repository_id)
+      |> Build.sorted
+      |> Repo.all
+
+    render(conn, "index.html", builds: builds)
   end
 
-  def show(conn, %{"id" => id}, repository) do
+  def show(conn, %{"id" => id}) do
     build =
       Repo.get!(Build, id)
       |> Repo.preload(jobs: :image)
     render(conn, "show.html", build: build)
   end
 
-  def run(conn, %{"id" => id}, repository) do
+  def run(conn, %{"id" => id}) do
     build =
       Repo.get!(Build, id)
       |> Repo.preload(jobs: :image)
@@ -43,18 +48,7 @@ defmodule Loadmaster.BuildController do
     Loadmaster.Builder.build(build.id)
 
     conn
-    |> put_flash(:info, "Started!!!")
+    |> put_flash(:info, "Build was restarted.")
     |> redirect(to: repository_build_path(conn, :show, build.repository_id, build))
-  end
-
-  defp action(conn, _) do
-    apply(__MODULE__, action_name(conn), [conn, conn.params, conn.assigns.repository])
-  end
-
-  defp load_repository(%{params: %{"repository_id" => repository_id}} = conn, _opts) do
-    repository =
-      Repo.get!(Repository, repository_id)
-      |> Repo.preload(:builds)
-    assign(conn, :repository, repository)
   end
 end

@@ -4,5 +4,5 @@ defmodule Loadmaster.BuildView do
   def step_status(%{"state" => "success"}), do: "panel-success"
   def step_status(%{"state" => "running"}), do: "panel-warning"
   def step_status(%{"state" => "error"}), do: "panel-danger"
-  def step_status(%{"state" => _}), do: "panel-default"
+  def step_status(_), do: "panel-default"
 end

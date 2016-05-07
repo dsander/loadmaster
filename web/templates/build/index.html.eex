@@ -15,12 +15,10 @@
       <td><%= build.pull_request_id %></td>
 
       <td class="text-right">
-        <%= link "Show", to: repository_build_path(@conn, :show, @repository, build), class: "btn btn-default btn-xs" %>
-        <%= link "Run", to: repository_build_path(@conn, :run, @repository, build), method: :post, class: "btn btn-success btn-xs" %>
+        <%= link "Show", to: repository_build_path(@conn, :show, build.repository_id, build), class: "btn btn-default btn-xs" %>
+        <%= link "Run", to: repository_build_path(@conn, :run, build.repository_id, build), method: :post, class: "btn btn-success btn-xs" %>
       </td>
     </tr>
 <% end %>
   </tbody>
 </table>
-
-<%= link "New repository", to: repository_path(@conn, :new) %>
