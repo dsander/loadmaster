@@ -5,6 +5,7 @@
 /deps
 /*.ez
 /tarballs
+.mix_tasks
 
 # Generate on crash by the VM
 erl_crash.dump

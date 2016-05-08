@@ -22,6 +22,7 @@ defmodule Loadmaster.ModelCase do
       import Ecto.Changeset
       import Ecto.Query, only: [from: 1, from: 2]
       import Loadmaster.ModelCase
+      import Loadmaster.TestHelpers
     end
   end
 

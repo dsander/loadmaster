@@ -12,7 +12,7 @@ defmodule Loadmaster.Image do
     timestamps
   end
 
-  @required_fields ~w(name cache_image dockerfile context)
+  @required_fields ~w(name cache_image dockerfile context repository_id)
   @optional_fields ~w()
 
   @doc """

@@ -26,6 +26,7 @@ defmodule Loadmaster.ConnCase do
       import Ecto.Query, only: [from: 1, from: 2]
 
       import Loadmaster.Router.Helpers
+      import Loadmaster.TestHelpers
 
       # The default endpoint for testing
       @endpoint Loadmaster.Endpoint

@@ -3,11 +3,11 @@ defmodule Loadmaster.UserTest do
 
   alias Loadmaster.User
 
-  @valid_attrs %{email: "some content", password_hash: "some content", username: "some content"}
+  @valid_attrs %{email: "email", password: "password", username: "username", invitation_token: "hello"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = User.changeset(%User{}, @valid_attrs)
+    changeset = User.registration_changeset(%User{}, @valid_attrs)
     assert changeset.valid?
   end
 

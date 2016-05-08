@@ -1,66 +1,62 @@
 defmodule Loadmaster.ImageControllerTest do
   use Loadmaster.ConnCase
+  import Loadmaster.TestHelpers
 
   alias Loadmaster.Image
   @valid_attrs %{cache_image: "some content", context: "some content", dockerfile: "some content", name: "some content"}
   @invalid_attrs %{}
 
-  test "lists all entries on index", %{conn: conn} do
-    conn = get conn, image_path(conn, :index)
+  setup do
+    user = insert_user(username: "admin")
+    conn = assign(conn(), :current_user, user)
+    repository = insert_repository
+    {:ok, conn: conn, user: user, repository: repository}
+  end
+
+  test "lists all entries on index", %{conn: conn, repository: repository} do
+    conn = get conn, repository_image_path(conn, :index, repository)
     assert html_response(conn, 200) =~ "Listing images"
   end
 
-  test "renders form for new resources", %{conn: conn} do
-    conn = get conn, image_path(conn, :new)
+  test "renders form for new resources", %{conn: conn, repository: repository} do
+    conn = get conn, repository_image_path(conn, :new, repository)
     assert html_response(conn, 200) =~ "New image"
   end
 
-  test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, image_path(conn, :create), image: @valid_attrs
-    assert redirected_to(conn) == image_path(conn, :index)
+  test "creates resource and redirects when data is valid", %{conn: conn, repository: repository} do
+    conn = post conn, repository_image_path(conn, :create, repository), image: @valid_attrs
+    assert redirected_to(conn) == repository_image_path(conn, :index, repository)
     assert Repo.get_by(Image, @valid_attrs)
   end
 
-  test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, image_path(conn, :create), image: @invalid_attrs
+  test "does not create resource and renders errors when data is invalid", %{conn: conn, repository: repository} do
+    conn = post conn, repository_image_path(conn, :create, repository), image: @invalid_attrs
     assert html_response(conn, 200) =~ "New image"
   end
 
-  test "shows chosen resource", %{conn: conn} do
-    image = Repo.insert! %Image{}
-    conn = get conn, image_path(conn, :show, image)
-    assert html_response(conn, 200) =~ "Show image"
-  end
-
-  test "renders page not found when id is nonexistent", %{conn: conn} do
-    assert_error_sent 404, fn ->
-      get conn, image_path(conn, :show, -1)
-    end
-  end
-
-  test "renders form for editing chosen resource", %{conn: conn} do
-    image = Repo.insert! %Image{}
-    conn = get conn, image_path(conn, :edit, image)
+  test "renders form for editing chosen resource", %{conn: conn, repository: repository} do
+    image = insert_image(repository)
+    conn = get conn, repository_image_path(conn, :edit, repository, image)
     assert html_response(conn, 200) =~ "Edit image"
   end
 
-  test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    image = Repo.insert! %Image{}
-    conn = put conn, image_path(conn, :update, image), image: @valid_attrs
-    assert redirected_to(conn) == image_path(conn, :show, image)
+  test "updates chosen resource and redirects when data is valid", %{conn: conn, repository: repository} do
+    image = insert_image(repository)
+    conn = put conn, repository_image_path(conn, :update, repository, image), image: @valid_attrs
+    assert redirected_to(conn) == repository_image_path(conn, :index, repository)
     assert Repo.get_by(Image, @valid_attrs)
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    image = Repo.insert! %Image{}
-    conn = put conn, image_path(conn, :update, image), image: @invalid_attrs
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, repository: repository} do
+    image = insert_image(repository)
+    conn = put conn, repository_image_path(conn, :update, repository, image), image: %{name: ""}
     assert html_response(conn, 200) =~ "Edit image"
   end
 
-  test "deletes chosen resource", %{conn: conn} do
-    image = Repo.insert! %Image{}
-    conn = delete conn, image_path(conn, :delete, image)
-    assert redirected_to(conn) == image_path(conn, :index)
+  test "deletes chosen resource", %{conn: conn, repository: repository} do
+    image = insert_image(repository)
+    conn = delete conn, repository_image_path(conn, :delete, repository, image)
+    assert redirected_to(conn) == repository_image_path(conn, :index, repository)
     refute Repo.get(Image, image.id)
   end
 end

@@ -1,9 +1,16 @@
 defmodule Loadmaster.RepositoryControllerTest do
   use Loadmaster.ConnCase
+  import Loadmaster.TestHelpers
 
   alias Loadmaster.Repository
-  @valid_attrs %{build_commands: "some content", docker_email: "some content", docker_password: "some content", docker_user: "some content", token: "some content"}
+  @valid_attrs %{docker_email: "some content", docker_password: "some content", docker_user: "some content"}
   @invalid_attrs %{}
+
+  setup do
+    user = insert_user(username: "admin")
+    conn = assign(conn(), :current_user, user)
+    {:ok, conn: conn, user: user}
+  end
 
   test "lists all entries on index", %{conn: conn} do
     conn = get conn, repository_path(conn, :index)
@@ -27,7 +34,7 @@ defmodule Loadmaster.RepositoryControllerTest do
   end
 
   test "shows chosen resource", %{conn: conn} do
-    repository = Repo.insert! %Repository{}
+    repository = insert_repository(@valid_attrs)
     conn = get conn, repository_path(conn, :show, repository)
     assert html_response(conn, 200) =~ "Show repository"
   end
@@ -45,7 +52,7 @@ defmodule Loadmaster.RepositoryControllerTest do
   end
 
   test "updates chosen resource and redirects when data is valid", %{conn: conn} do
-    repository = Repo.insert! %Repository{}
+    repository = insert_repository(@valid_attrs)
     conn = put conn, repository_path(conn, :update, repository), repository: @valid_attrs
     assert redirected_to(conn) == repository_path(conn, :show, repository)
     assert Repo.get_by(Repository, @valid_attrs)

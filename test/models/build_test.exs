@@ -3,11 +3,15 @@ defmodule Loadmaster.BuildTest do
 
   alias Loadmaster.Build
 
-  @valid_attrs %{pull_request_id: 42}
+  @valid_attrs %{pull_request_id: 42, git_remote: "git://github.com"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
-    changeset = Build.changeset(%Build{}, @valid_attrs)
+    changeset =
+      insert_repository
+      |> build_assoc(:builds)
+      |> Build.changeset(@valid_attrs)
+
     assert changeset.valid?
   end
 

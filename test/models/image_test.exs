@@ -3,7 +3,7 @@ defmodule Loadmaster.ImageTest do
 
   alias Loadmaster.Image
 
-  @valid_attrs %{cache_image: "some content", context: "some content", dockerfile: "some content", name: "some content"}
+  @valid_attrs %{cache_image: "some content", context: "some content", dockerfile: "some content", name: "some content", repository_id: 111}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

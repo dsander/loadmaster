@@ -21,11 +21,7 @@
             </div>
             <div id="<%= step %><%= job.id %>" class="panel-collapse collapse <%= if step == "login" do %>in<% end %>" role="tabpanel" aria-labelledby="headingOne">
               <div class="panel-body">
-                <pre>
-                  <% if data["output"] do %>
-                    <%= Enum.join(data["output"], "\n") %>
-                  <% end %>
-                </pre>
+                <pre><% if data["output"] do %><%= Enum.join(data["output"], "\n") %><% end %></pre>
               </div>
             </div>
           </div>
