@@ -9,6 +9,8 @@ defmodule Loadmaster.Mixfile do
      compilers: [:phoenix, :gettext] ++ Mix.compilers,
      build_embedded: Mix.env == :prod,
      start_permanent: Mix.env == :prod,
+     test_coverage: [tool: ExCoveralls],
+     preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
      aliases: aliases,
      deps: deps]
   end
@@ -39,7 +41,9 @@ defmodule Loadmaster.Mixfile do
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.4"},
      {:exrm, "~> 1.0.4"},
-     {:porcelain, "~> 2.0"}]
+     {:porcelain, "~> 2.0"},
+     {:excoveralls, "~> 0.5", only: :test},
+    ]
   end
 
   # Aliases are shortcut or tasks specific to the current project.

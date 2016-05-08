@@ -6,6 +6,7 @@
 /*.ez
 /tarballs
 .mix_tasks
+/cover
 
 # Generate on crash by the VM
 erl_crash.dump
