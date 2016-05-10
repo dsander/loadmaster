@@ -43,6 +43,7 @@ defmodule Loadmaster.Mixfile do
      {:exrm, "~> 1.0.4"},
      {:porcelain, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: :test},
+     {:mix_test_watch, "~> 0.2", only: :dev},
     ]
   end
 

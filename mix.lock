@@ -22,6 +22,7 @@
   "jsx": {:hex, :jsx, "2.6.2"},
   "metrics": {:hex, :metrics, "1.0.1"},
   "mimerl": {:hex, :mimerl, "1.0.2"},
+  "mix_test_watch": {:hex, :mix_test_watch, "0.2.6"},
   "phoenix": {:hex, :phoenix, "1.1.4"},
   "phoenix_ecto": {:hex, :phoenix_ecto, "2.0.1"},
   "phoenix_html": {:hex, :phoenix_html, "2.5.1"},

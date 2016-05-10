@@ -33,4 +33,10 @@ defmodule Loadmaster.TestHelpers do
     |> Loadmaster.Image.changeset(Dict.merge(attrs, repository_id: repository.id))
     |> Repo.insert!
   end
+
+  def insert_job(build \\ insert_build, image \\ insert_image, attrs \\ %{state: "pending", data: %{}}) do
+    %Loadmaster.Job{}
+    |> Loadmaster.Job.changeset(Dict.merge(attrs, build_id: build.id, image_id: image.id))
+    |> Repo.insert!
+  end
 end
