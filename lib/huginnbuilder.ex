@@ -11,7 +11,7 @@ defmodule Loadmaster do
       supervisor(Loadmaster.Endpoint, []),
       # Start the Ecto repository
       supervisor(Loadmaster.Repo, []),
-      supervisor(Loadmaster.Builder,[%{}]),
+      supervisor(Loadmaster.Builder, [%{}]),
       # Here you could define other workers and supervisors as children
       # worker(Loadmaster.Worker, [arg1, arg2, arg3]),
     ]
@@ -29,7 +29,7 @@ defmodule Loadmaster do
   end
 
   defp migrate do
-    migrations = Path.join(["#{:code.priv_dir(:loadmaster)}", "repo", "migrations"])
+    migrations = Path.join([:code.priv_dir(:loadmaster), "repo", "migrations"])
     IO.puts "######### running migrations..."
     Ecto.Migrator.run(Loadmaster.Repo, migrations, :up, all: true)
   end

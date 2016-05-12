@@ -9,5 +9,5 @@ server = %{
   insecure: true
 }
 
-{:ok,conn} = Docker.start_link server
+{:ok, conn} = Docker.start_link server
 IO.inspect Docker.info conn

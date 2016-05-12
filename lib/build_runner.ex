@@ -24,7 +24,7 @@ defmodule Loadmaster.BuildRunner do
       |> step(:setup)
       |> step(:login)
       |> step(:clone)
-      #|> step(:update_cache)
+      # |> step(:update_cache)
       |> step(:build)
       |> step(:push)
       |> step(:teardown)

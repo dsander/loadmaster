@@ -26,5 +26,4 @@ defmodule Runit do
 
 end
 
-
 Runit.init
