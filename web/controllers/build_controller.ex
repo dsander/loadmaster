@@ -24,6 +24,7 @@ defmodule Loadmaster.BuildController do
     render(conn, "show.html", build: build)
   end
 
+  @builder Application.get_env(:loadmaster, :builder) || Loadmaster.Builder
   def run(conn, %{"id" => id}) do
     build =
       Repo.get!(Build, id)
@@ -45,7 +46,7 @@ defmodule Loadmaster.BuildController do
       end
     end
 
-    Loadmaster.Builder.build(build.id)
+    @builder.build(build.id)
 
     conn
     |> put_flash(:info, "Build was restarted.")

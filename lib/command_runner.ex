@@ -2,6 +2,8 @@ defmodule Loadmaster.CommandRunner do
   alias Loadmaster.BuildRunner.StepState
   alias Loadmaster.Endpoint
 
+  @executor Application.get_env(:loadmaster, :command_executor) || Porcelain
+
   def run_command(step_state = %StepState{status: :ok}, name, cmd, options \\ %{}) do
     if Map.get(options, :echo_cmd, true) do
       step_state = %{ step_state | output: "Running: " <> cmd }
@@ -11,11 +13,11 @@ defmodule Loadmaster.CommandRunner do
       if Map.get(options, :in_docker, true) do
         cmd = "docker exec #{container_name(step_state)} sh -c \"#{cmd}\""
       end
-      Porcelain.spawn_shell("cd builds;" <> cmd <> " 2>&1",
+      @executor.spawn_shell("cd builds;" <> cmd <> " 2>&1",
                               in: :receive, out: {:send, self()}, err: {:send, self()})
       |> loop(name, step_state)
     end)
-    |> Task.await(1200_000)
+    |> await
   end
 
   def run_command(step_state = %StepState{status: :error}, _, _, _) do
@@ -38,6 +40,14 @@ defmodule Loadmaster.CommandRunner do
         %StepState{ step_state | status: :ok, output: step_state.output <> output }
       {^pid, :result, %Porcelain.Result{status: _}} ->
         %StepState{ step_state | status: :error, output: step_state.output <> output }
+    end
+  end
+
+  defp await(task) do
+    if @executor == Porcelain do
+      Task.await(task, 1200_000)
+    else
+      task
     end
   end
 end

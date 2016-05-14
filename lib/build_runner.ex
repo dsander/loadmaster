@@ -8,7 +8,8 @@ defmodule Loadmaster.BuildRunner do
   alias Loadmaster.Endpoint
   alias Loadmaster.Build
   alias Loadmaster.Job
-  import Loadmaster.CommandRunner
+
+  @command_runner Application.get_env(:loadmaster, :command_runner) || Loadmaster.CommandRunner
 
   def run(build_id) do
     build =
@@ -36,50 +37,50 @@ defmodule Loadmaster.BuildRunner do
   def step(step_state = %StepState{status: :ok}, name = :setup) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "docker run -id -v /var/run/docker.sock:/var/run/docker.sock --name #{container_name(step_state)} builder", %{echo_cmd: false, in_docker: false})
+    |> @command_runner.run_command(name, "docker run -id -v /var/run/docker.sock:/var/run/docker.sock --name #{@command_runner.container_name(step_state)} builder", %{echo_cmd: false, in_docker: false})
     |> write_step_state(name)
   end
 
   def step(step_state = %StepState{status: :ok}, name = :login) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "docker login -u #{step_state.repository.docker_user} -p #{step_state.repository.docker_password}", %{echo_cmd: false})
+    |> @command_runner.run_command(name, "docker login -u #{step_state.repository.docker_user} -p #{step_state.repository.docker_password}", %{echo_cmd: false})
     |> write_step_state(name)
   end
 
   def step(step_state = %StepState{status: :ok}, name = :clone) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "git clone --depth=1 #{step_state.git_remote} build")
-    |> run_command(name, "cd build; git fetch --depth=1 origin pull/#{step_state.build.pull_request_id}/head:pr; git checkout pr")
+    |> @command_runner.run_command(name, "git clone --depth=1 #{step_state.git_remote} build")
+    |> @command_runner.run_command(name, "cd build; git fetch --depth=1 origin pull/#{step_state.build.pull_request_id}/head:pr; git checkout pr")
     |> write_step_state(name)
   end
 
   def step(step_state = %StepState{status: :ok}, name = :update_cache) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "docker pull #{step_state.job.image.cache_image}")
+    |> @command_runner.run_command(name, "docker pull #{step_state.job.image.cache_image}")
     |> write_step_state(name)
   end
 
   def step(step_state = %StepState{status: :ok}, name = :build) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "cd build; docker build -t #{step_state.job.image.name}:pr-#{step_state.build.pull_request_id} -f #{step_state.job.image.dockerfile} #{step_state.job.image.context}")
+    |> @command_runner.run_command(name, "cd build; docker build -t #{step_state.job.image.name}:pr-#{step_state.build.pull_request_id} -f #{step_state.job.image.dockerfile} #{step_state.job.image.context}")
     |> write_step_state(name)
   end
 
   def step(step_state = %StepState{status: :ok}, name = :push) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "docker push #{step_state.job.image.name}:pr-#{step_state.build.pull_request_id}")
+    |> @command_runner.run_command(name, "docker push #{step_state.job.image.name}:pr-#{step_state.build.pull_request_id}")
     |> write_step_state(name)
   end
 
   def step(step_state = %StepState{status: :ok}, name = :teardown) do
     step_state
     |> start_step_processing(name)
-    |> run_command(name, "docker rm -f #{container_name(step_state)}", %{echo_cmd: false, in_docker: false})
+    |> @command_runner.run_command(name, "docker rm -f #{@command_runner.container_name(step_state)}", %{echo_cmd: false, in_docker: false})
     |> write_step_state(name)
   end
 

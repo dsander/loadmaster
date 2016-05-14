@@ -8,24 +8,24 @@ defmodule Loadmaster.BuildControllerTest do
     {:ok, conn: conn, user: user, repository: repository}
   end
 
-  test "renders a list of all builds for the repository", %{conn: conn, user: user, repository: repository} do
-    build = insert_build(repository)
+  test "renders a list of all builds for the repository", %{conn: conn, user: _user, repository: repository} do
+    insert_build(repository)
     conn = get conn, repository_build_path(conn, :index, repository)
 
     assert html_response(conn, 200) =~ "Listing builds"
   end
 
-  test "it shows a specific build", %{conn: conn, user: user, repository: repository} do
+  test "it shows a specific build", %{conn: conn, user: _user, repository: repository} do
     build = insert_build(repository)
     conn = get conn, repository_build_path(conn, :show, repository, build)
 
     assert html_response(conn, 200) =~ "Build #{build.id}"
   end
 
-  test "it restarts a build successfully", %{conn: conn, user: user, repository: repository}  do
+  test "it restarts a build successfully", %{conn: conn, user: _user, repository: repository}  do
     build = insert_build(repository)
     image = insert_image(repository)
-    job = insert_job(build, image)
+    insert_job(build, image)
 
     conn = post conn, repository_build_path(conn, :run, repository, build)
 
