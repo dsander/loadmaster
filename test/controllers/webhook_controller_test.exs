@@ -29,7 +29,11 @@ defmodule Loadmaster.WebhookControllerTest do
     conn = post conn, webhook_path(conn, :handle, repository.token), %{"action" => "unknown"}
 
     assert json_response(conn, 405) == "ok"
-    System.put_env("MIX_ENV", prev_env)
+    if prev_env do
+      System.put_env("MIX_ENV", prev_env)
+    else
+      System.delete_env("MIX_ENV")
+    end
   end
 
   test "handle starts a build when needed", %{conn: conn, repository: repository} do

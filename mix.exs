@@ -45,6 +45,7 @@ defmodule Loadmaster.Mixfile do
      {:excoveralls, "~> 0.5", only: :test},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:dogma, "~> 0.1", only: :dev},
+     {:edib, "~>  0.6.2", only: :dev}
     ]
   end
 
