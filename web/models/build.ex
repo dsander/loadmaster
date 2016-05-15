@@ -1,5 +1,8 @@
 defmodule Loadmaster.Build do
   use Loadmaster.Web, :model
+  alias Loadmaster.Repo
+  alias Loadmaster.Build
+  alias Loadmaster.Job
 
   schema "builds" do
     field :pull_request_id, :integer
@@ -21,7 +24,7 @@ defmodule Loadmaster.Build do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, [:pull_request_id, :repository_id, :git_remote], @optional_fields)
     |> assoc_constraint(:repository)
   end
 
@@ -31,5 +34,35 @@ defmodule Loadmaster.Build do
 
   def sorted(query) do
     from p in query, order_by: [desc: :id]
+  end
+
+  def run(build, repository) do
+    {:ok, build} = Repo.transaction fn ->
+      build = Repo.insert!(build)
+      for image <- repository.images do
+        build
+        |> build_assoc(:jobs)
+        |> Job.create_changeset(%{image_id: image.id, state: "pending"})
+        |> Repo.insert!
+      end
+      build
+    end
+    build
+  end
+
+  def rerun(id) do
+    build =
+      Build
+      |> Repo.get!(id)
+      |> Repo.preload(jobs: :image)
+
+    {:ok, _} = Repo.transaction fn ->
+      for job <- build.jobs do
+        job
+        |> Job.create_changeset(%{image_id: job.image.id, state: "pending"})
+        |> Repo.update!
+      end
+    end
+    build
   end
 end

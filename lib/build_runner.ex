@@ -13,7 +13,8 @@ defmodule Loadmaster.BuildRunner do
 
   def run(build_id) do
     build =
-      Repo.get!(Build, build_id)
+      Build
+      |> Repo.get!(build_id)
       |> Repo.preload([:repository, :jobs])
     repository = Repo.preload(build.repository, :images)
 
@@ -106,6 +107,6 @@ defmodule Loadmaster.BuildRunner do
     data = put_in(step_state.job.data, [name], %{state: value, output: String.split(step_state.output, "\n")})
     job = Repo.update!(Job.changeset(step_state.job, %{data: data}))
     Endpoint.broadcast("build:#{step_state.build.id}", "update_state", %{job_id: step_state.job.id, step: name, value: value})
-    %StepState{ step_state | job: job, output: ""}
+    %StepState{step_state | job: job, output: ""}
   end
 end

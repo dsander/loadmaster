@@ -4,9 +4,10 @@ defmodule Loadmaster.CommandRunner do
 
   @executor Application.get_env(:loadmaster, :command_executor) || Porcelain
 
+  @lint {Credo.Check.Refactor.PipeChainStart, false}
   def run_command(step_state = %StepState{status: :ok}, name, cmd, options \\ %{}) do
     if Map.get(options, :echo_cmd, true) do
-      step_state = %{ step_state | output: "Running: " <> cmd }
+      step_state = %{step_state | output: "Running: " <> cmd}
       Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: "Running: " <> cmd})
     end
     Task.async(fn ->
@@ -37,9 +38,9 @@ defmodule Loadmaster.CommandRunner do
         |> Enum.each(fn(row) -> Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: row}) end)
         loop(proc, name, step_state, output <> data)
       {^pid, :result, %Porcelain.Result{status: 0}} ->
-        %StepState{ step_state | status: :ok, output: step_state.output <> output }
+        %StepState{step_state | status: :ok, output: step_state.output <> output}
       {^pid, :result, %Porcelain.Result{status: _}} ->
-        %StepState{ step_state | status: :error, output: step_state.output <> output }
+        %StepState{step_state | status: :error, output: step_state.output <> output}
     end
   end
 

@@ -3,38 +3,19 @@ defmodule Loadmaster.WebhookController do
 
   alias Loadmaster.Repository
   alias Loadmaster.Build
-  alias Loadmaster.Job
 
   @builder Application.get_env(:loadmaster, :builder) || Loadmaster.Builder
   def handle(conn, %{"token" => token, "action" => action, "pull_request" => pull_request} = params) when action in ["opened", "synchronize", "reopened"] do
     repository =
-      Repo.get_by!(Repository, token: token)
+      Repository
+      |> Repo.get_by!(token: token)
       |> Repo.preload(:images)
 
     build =
       repository
       |> build_assoc(:builds)
       |> Build.changeset(%{pull_request_id: pull_request["number"], git_remote: params["repository"]["clone_url"]})
-
-    {:ok, build} = Repo.transaction fn ->
-      build = Repo.insert!(build)
-      for image <- repository.images do
-        initial_data = %{
-          setup: %{state: "pending", output: []},
-          login: %{state: "pending", output: []},
-          clone: %{state: "pending", output: []},
-          update_cache: %{state: "pending", output: []},
-          build: %{state: "pending", output: []},
-          push: %{state: "pending", output: []},
-          teardown: %{state: "pending", output: []},
-        }
-        build
-        |> build_assoc(:jobs)
-        |> Job.changeset(%{image_id: image.id, state: "pending", data: initial_data})
-        |> Repo.insert!
-      end
-      build
-    end
+      |> Build.run(repository)
 
     @builder.build(build.id)
 

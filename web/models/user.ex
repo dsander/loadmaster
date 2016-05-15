@@ -44,21 +44,21 @@ defmodule Loadmaster.User do
     |> hash_password
   end
 
-  def validate_invitation_token(changeset) do
-    case changeset do
+  def validate_invitation_token(model) do
+    case model do
       %Ecto.Changeset{changes: %{invitation_token: "hello"}} ->
-        changeset
+        model
       _ ->
-        add_error(changeset, :invitation_token, "is invalid")
+        add_error(model, :invitation_token, "is invalid")
     end
   end
 
-  def hash_password(changeset) do
-    case changeset do
+  def hash_password(model) do
+    case model do
       %Ecto.Changeset{valid?: true, changes: %{password: password}} ->
-        put_change(changeset, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
+        put_change(model, :password_hash, Comeonin.Bcrypt.hashpwsalt(password))
       _ ->
-        changeset
+        model
     end
   end
 end

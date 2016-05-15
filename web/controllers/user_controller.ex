@@ -2,6 +2,7 @@ defmodule Loadmaster.UserController do
   use Loadmaster.Web, :controller
 
   alias Loadmaster.User
+  alias Loadmaster.Auth
 
   plug :scrub_params, "user" when action in [:create, :update]
   plug :authenticate_user when action in [:index, :show]
@@ -17,7 +18,7 @@ defmodule Loadmaster.UserController do
     case Repo.insert(changeset) do
       {:ok, user} ->
         conn
-        |> Loadmaster.Auth.login(user)
+        |> Auth.login(user)
         |> put_flash(:info, "User created successfully.")
         |> redirect(to: page_path(conn, :index))
       {:error, changeset} ->

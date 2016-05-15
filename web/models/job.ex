@@ -12,7 +12,15 @@ defmodule Loadmaster.Job do
 
   @required_fields ~w(state data image_id build_id)
   @optional_fields ~w()
-
+  @initial_data %{
+                  setup: %{state: "pending", output: []},
+                  login: %{state: "pending", output: []},
+                  clone: %{state: "pending", output: []},
+                  update_cache: %{state: "pending", output: []},
+                  build: %{state: "pending", output: []},
+                  push: %{state: "pending", output: []},
+                  teardown: %{state: "pending", output: []},
+                }
   @doc """
   Creates a changeset based on the `model` and `params`.
 
@@ -22,6 +30,14 @@ defmodule Loadmaster.Job do
   def changeset(model, params \\ :empty) do
     model
     |> cast(params, @required_fields, @optional_fields)
+    |> assoc_constraint(:build)
+    |> assoc_constraint(:image)
+  end
+
+  def create_changeset(model, params) do
+    model
+    |> cast(params, [:state, :image_id, :build_id], [])
+    |> put_change(:data, @initial_data)
     |> assoc_constraint(:build)
     |> assoc_constraint(:image)
   end

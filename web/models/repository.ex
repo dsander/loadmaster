@@ -37,11 +37,11 @@ defmodule Loadmaster.Repository do
     |> cast(params, @required_fields, @optional_fields)
   end
 
-  def create_token(changeset) do
-    put_change(changeset, :token, random_string(32))
+  def create_token(model) do
+    put_change(model, :token, random_string(32))
   end
 
-  defp random_string(length) do
-    :crypto.strong_rand_bytes(length) |> Base.url_encode64 |> binary_part(0, length)
+  defp random_string(string_length) do
+    string_length |> :crypto.strong_rand_bytes |> Base.url_encode64 |> binary_part(0, string_length)
   end
 end

@@ -51,7 +51,7 @@ defmodule Loadmaster.ImageController do
     changeset = Image.changeset(image, image_params)
 
     case Repo.update(changeset) do
-      {:ok, image} ->
+      {:ok, _image} ->
         conn
         |> put_flash(:info, "Image updated successfully.")
         |> redirect(to: repository_image_path(conn, :index, repository))

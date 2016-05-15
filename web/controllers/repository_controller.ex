@@ -2,8 +2,6 @@ defmodule Loadmaster.RepositoryController do
   use Loadmaster.Web, :controller
 
   alias Loadmaster.Repository
-  alias Loadmaster.Build
-  alias Loadmaster.Job
 
   plug :scrub_params, "repository" when action in [:create, :update]
   plug :authenticate_user
