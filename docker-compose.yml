@@ -1,5 +1,13 @@
 version: "2"
 services:
+  nginx:
+    image: jwilder/nginx-proxy
+    restart: always
+    ports:
+      - "80:80"
+    volumes:
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+
   db:
     image: "postgres:9.5"
     restart: always
@@ -10,14 +18,18 @@ services:
     volumes:
       - dbdata:/var/lib/postgres
 
-  web:
+  loadmaster:
+    depends_on:
+      - db
+      - nginx
     image: "local/loadmaster:0.0.1"
     restart: always
     environment:
       PORT: "4000"
       SECRET_KEY_BASE: "changeme"
+      VIRTUAL_HOST: 127.0.0.1.xip.io
     ports:
-      - "4000:4000"
+      - "127.0.0.1:4000:4000"
     links:
       - "db:db"
 volumes:
