@@ -1,20 +1,20 @@
 # Loadmaster
 
-To start your Phoenix app:
+Loadmaster builds Docker images for your project's pull request publicly without exposing the registry credentials.
 
-  * Install dependencies with `mix deps.get`
-  * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
-  * Install Node.js dependencies with `npm install`
-  * Start Phoenix endpoint with `mix phoenix.server`
+This project was started because, to my knowledge, no public CI service has the ability to build Docker images for a project's pull request without exposing the registry credentials.
 
-Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
+## How it works
 
-Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
+1. Set up Loadmaster on your server/VPS
+2. Configure the Docker images Loadmaster should build for your project
+3. Configure your Github repository to send Loadmaster a webhook for pull request actions
+3. For every new/updated Pull Request a new docker image will be build and pushed to the Docker Hub
 
-## Learn more
+## Installation
 
-  * Official website: http://www.phoenixframework.org/
-  * Guides: http://phoenixframework.org/docs/overview
-  * Docs: http://hexdocs.pm/phoenix
-  * Mailing list: http://groups.google.com/group/phoenix-talk
-  * Source: https://github.com/phoenixframework/phoenix
+Use the provided `docker-compose.yml` and run `docker-compose up -d` on your server.
+
+## Contributing
+
+I am still learning about Elixir and Phoenix, feedback and suggestions on how to improve the code are very welcome!
