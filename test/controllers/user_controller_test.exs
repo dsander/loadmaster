@@ -32,22 +32,42 @@ defmodule Loadmaster.UserControllerTest do
     assert html_response(conn, 200) =~ "Edit user"
   end
 
+  test "it only renders the edit form when the id matches the current user", %{conn: conn} do
+    bob = insert_user(username: "bob")
+    conn = get conn, user_path(conn, :edit, bob)
+    assert redirected_to(conn) == page_path(conn, :index)
+    assert get_flash(conn, :error) == "User not found"
+  end
+
   test "updates chosen resource and redirects when data is valid", %{conn: conn, user: user} do
     conn = put conn, user_path(conn, :update, user), user: %{email: "email", username: "email", password: "password"}
     assert redirected_to(conn) == page_path(conn, :index)
     assert Repo.get_by(User, %{email: "email", username: "email"})
   end
 
-  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
-    user = Repo.insert! %User{}
+  test "it only updates the user when the id matches the current user", %{conn: conn} do
+    bob = insert_user(username: "bob")
+    conn = put conn, user_path(conn, :update, bob), user: %{email: "email", username: "email", password: "password"}
+    assert redirected_to(conn) == page_path(conn, :index)
+    assert get_flash(conn, :error) == "User not found"
+  end
+
+  test "does not update chosen resource and renders errors when data is invalid", %{conn: conn, user: user} do
     conn = put conn, user_path(conn, :update, user), user: @invalid_attrs
     assert html_response(conn, 200) =~ "Edit user"
   end
 
-  test "deletes chosen resource", %{conn: conn} do
-    user = Repo.insert! %User{}
+  test "deletes chosen resource", %{conn: conn, user: user} do
     conn = delete conn, user_path(conn, :delete, user)
     assert redirected_to(conn) == page_path(conn, :index)
     refute Repo.get(User, user.id)
+  end
+
+  test "it does not delete the user when the id does not match the current_user", %{conn: conn, user: user} do
+    bob = insert_user(username: "bob")
+    conn = delete conn, user_path(conn, :delete, bob)
+    assert redirected_to(conn) == page_path(conn, :index)
+    assert Repo.get(User, user.id)
+    assert get_flash(conn, :error) == "User not found"
   end
 end

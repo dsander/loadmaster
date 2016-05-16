@@ -3,9 +3,11 @@ defmodule Loadmaster.UserController do
 
   alias Loadmaster.User
   alias Loadmaster.Auth
+  alias Loadmaster.Router.Helpers
 
   plug :scrub_params, "user" when action in [:create, :update]
   plug :authenticate_user when action in [:index, :show]
+  plug :user_owned when action in [:edit, :update, :delete]
 
   def new(conn, _params) do
     changeset = User.changeset(%User{})
@@ -56,5 +58,16 @@ defmodule Loadmaster.UserController do
     conn
     |> put_flash(:info, "User deleted successfully.")
     |> redirect(to: page_path(conn, :index))
+  end
+
+  def user_owned(%{params: %{"id" => id}} = conn, opts) do
+    if conn.assigns.current_user.id != String.to_integer(id) do
+      conn
+      |> put_flash(:error, "User not found")
+      |> redirect(to: Helpers.page_path(conn, :index))
+      |> halt
+    else
+      conn
+    end
   end
 end
