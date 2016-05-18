@@ -17,7 +17,7 @@ defmodule Loadmaster.UserControllerTest do
   end
 
   test "creates resource and redirects when data is valid", %{conn: conn} do
-    conn = post conn, user_path(conn, :create), user: Dict.merge(@valid_attrs, %{invitation_token: "hello", password: "password"})
+    conn = post conn, user_path(conn, :create), user: Dict.merge(@valid_attrs, %{invitation_token: "try-loadmaster", password: "password"})
     assert redirected_to(conn) == page_path(conn, :index)
     assert Repo.get_by(User, @valid_attrs)
   end

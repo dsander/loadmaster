@@ -7,7 +7,7 @@ defmodule Loadmaster.TestHelpers do
       username: "User #{Base.encode16((:crypto.rand_bytes(8)))}",
       email: "#{Base.encode16((:crypto.rand_bytes(8)))}@example.com",
       password: "secret",
-      invitation_token: "hello"
+      invitation_token: "try-loadmaster"
     }, attrs)
 
     %Loadmaster.User{}

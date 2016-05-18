@@ -22,17 +22,18 @@ config :logger, level: :info
 
 config :loadmaster, Loadmaster.Repo,
   adapter: Ecto.Adapters.Postgres,
-  hostname: System.get_env("DB_HOST") || "db",
-  username: System.get_env("DB_USER") || "loadmaster",
-  password: System.get_env("DB_PASSWORD") || "loadmaster",
-  database: System.get_env("DATABASE_NAME") || "loadmaster_prod",
+  hostname: "${DB_HOST}",
+  username: "${DB_USER}",
+  password: "${DB_PASSWORD}",
+  database: "${DATABASE_NAME}",
   pool_size: 20
 
 config :loadmaster, Loadmaster.Endpoint,
-  secret_key_base: System.get_env("SECRET_KEY_BASE")
+  secret_key_base: "${SECRET_KEY_BASE}"
 
 config :loadmaster,
-  migrate_on_boot: true
+  migrate_on_boot: true,
+  invitation_token: "${INVITATION_TOKEN}"
 
 # ## SSL Support
 #

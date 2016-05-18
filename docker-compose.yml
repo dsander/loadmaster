@@ -22,12 +22,18 @@ services:
     depends_on:
       - db
       - nginx
-    image: "local/loadmaster:0.0.1"
+    image: "dsander/loadmaster:0.0.1"
     restart: always
     environment:
+      RELX_REPLACE_OS_VARS: "true"
+      DB_HOST: db
+      DB_USER: loadmaster
+      DB_PASSWORD: loadmaster
+      DATABASE_NAME: loadmaster_prod
       PORT: "4000"
       SECRET_KEY_BASE: "changeme"
-      VIRTUAL_HOST: 127.0.0.1.xip.io
+      INVITATION_TOKEN: "try-loadmaster"
+      VIRTUAL_HOST: "127.0.0.1.xip.io"
     ports:
       - "127.0.0.1:4000:4000"
     links:

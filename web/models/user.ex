@@ -45,8 +45,9 @@ defmodule Loadmaster.User do
   end
 
   def validate_invitation_token(model) do
+    token = Application.get_env(:loadmaster, :invitation_token)
     case model do
-      %Ecto.Changeset{changes: %{invitation_token: "hello"}} ->
+      %Ecto.Changeset{changes: %{invitation_token: ^token}} ->
         model
       _ ->
         add_error(model, :invitation_token, "is invalid")

@@ -3,7 +3,7 @@ defmodule Loadmaster.UserTest do
 
   alias Loadmaster.User
 
-  @valid_attrs %{email: "email", password: "password", username: "username", invitation_token: "hello"}
+  @valid_attrs %{email: "email", password: "password", username: "username", invitation_token: "try-loadmaster"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do
@@ -12,7 +12,12 @@ defmodule Loadmaster.UserTest do
   end
 
   test "changeset with invalid attributes" do
-    changeset = User.changeset(%User{}, @invalid_attrs)
+    changeset = User.registration_changeset(%User{}, @invalid_attrs)
+    refute changeset.valid?
+  end
+
+  test "changeset with invalid invitation_token" do
+    changeset = User.registration_changeset(%User{}, %{ @valid_attrs | invitation_token: "invalid" })
     refute changeset.valid?
   end
 end

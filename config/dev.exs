@@ -40,3 +40,6 @@ config :loadmaster, Loadmaster.Repo,
   database: "loadmaster_dev",
   hostname: "localhost",
   pool_size: 10
+
+config :loadmaster,
+  invitation_token: System.get_env("INVITATION_TOKEN") || "try-loadmaster"
