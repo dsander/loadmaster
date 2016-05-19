@@ -34,6 +34,8 @@ services:
       SECRET_KEY_BASE: "changeme"
       INVITATION_TOKEN: "try-loadmaster"
       VIRTUAL_HOST: "127.0.0.1.xip.io"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
     ports:
       - "127.0.0.1:4000:4000"
     links:

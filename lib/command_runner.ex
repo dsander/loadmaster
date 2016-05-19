@@ -14,7 +14,7 @@ defmodule Loadmaster.CommandRunner do
       if Map.get(options, :in_docker, true) do
         cmd = "docker exec #{container_name(step_state)} sh -c \"#{cmd}\""
       end
-      @executor.spawn_shell("cd builds;" <> cmd <> " 2>&1",
+      @executor.spawn_shell(cmd <> " 2>&1",
                               in: :receive, out: {:send, self()}, err: {:send, self()})
       |> loop(name, step_state)
     end)

@@ -38,7 +38,7 @@ defmodule Loadmaster.BuildRunner do
   def step(step_state = %StepState{status: :ok}, name = :setup) do
     step_state
     |> start_step_processing(name)
-    |> @command_runner.run_command(name, "docker run -id -v /var/run/docker.sock:/var/run/docker.sock --name #{@command_runner.container_name(step_state)} builder", %{echo_cmd: false, in_docker: false})
+    |> @command_runner.run_command(name, "docker run -id -v /var/run/docker.sock:/var/run/docker.sock --name #{@command_runner.container_name(step_state)} dsander/loadmaster-builder", %{echo_cmd: false, in_docker: false})
     |> write_step_state(name)
   end
 
