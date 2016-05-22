@@ -1,4 +1,4 @@
-# Loadmaster
+# Loadmaster [![Build Status](https://travis-ci.org/dsander/loadmaster.svg?branch=master)](https://travis-ci.org/dsander/loadmaster) [![Coverage Status](https://coveralls.io/repos/github/dsander/loadmaster/badge.svg?branch=fix-build)](https://coveralls.io/github/dsander/loadmaster?branch=fix-build)
 
 Loadmaster builds Docker images for your project's pull request publicly without exposing the registry credentials.
 
