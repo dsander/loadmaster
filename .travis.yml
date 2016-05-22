@@ -1,0 +1,12 @@
+dist: trusty
+sudo: required
+services:
+  - docker
+  - postgresql
+language: elixir
+elixir:
+  - 1.2.4
+env:
+  - MIX_ENV=test
+script: mix coveralls.travis
+after_success: sh build-docker-image.sh
