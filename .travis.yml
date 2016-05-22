@@ -3,10 +3,26 @@ sudo: required
 services:
   - docker
   - postgresql
+addons:
+  postgresql: "9.4"
 language: elixir
 elixir:
-  - 1.2.4
+  - 1.2.5
+otp_release:
+  - 18.2.1
+cache:
+  directories:
+    - _build
+    - deps
 env:
   - MIX_ENV=test
-script: mix coveralls.travis
-after_success: sh build-docker-image.sh
+before_install:
+  - unzip -d elixir v1.2.5.zip
+  - export PATH=`pwd`/elixir/bin:$PATH
+before_script:
+  - mix local.rebar
+  - mix compile
+script:
+  - mix coveralls.travis
+  - mix credo --strict
+after_success: ./build-docker-image.sh
