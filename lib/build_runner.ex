@@ -78,8 +78,9 @@ defmodule Loadmaster.BuildRunner do
     |> write_step_state(name)
   end
 
-  def step(step_state = %StepState{status: :ok}, name = :teardown) do
+  def step(step_state = %StepState{status: _}, name = :teardown) do
     step_state
+    |> Map.put(:status, :ok)
     |> start_step_processing(name)
     |> @command_runner.run_command(name, "docker rm -f #{@command_runner.container_name(step_state)}", %{echo_cmd: false, in_docker: false})
     |> write_step_state(name)
