@@ -20,9 +20,9 @@ defmodule Loadmaster.BuildRunner do
 
     for job <- build.jobs do
       job = Repo.preload(job, :image)
-      job = Repo.update!(Job.changeset(job, %{state: "running"}))
+      job = Repo.update!(Job.changeset(job, %{state: "running", data: Map.put(job.data, :started_at, :os.system_time(:seconds))}))
 
-      %StepState{repository: repository, job: job, build: build, git_remote: build.git_remote}
+      step_state = %StepState{repository: repository, job: job, build: build, git_remote: build.git_remote}
       |> step(:setup)
       |> step(:login)
       |> step(:clone)
@@ -31,7 +31,7 @@ defmodule Loadmaster.BuildRunner do
       |> step(:push)
       |> step(:teardown)
 
-      Repo.update!(Job.changeset(job, %{state: "success"}))
+      Repo.update!(Job.changeset(job, %{state: "success", data: Map.put(step_state.job.data, :finished_at, :os.system_time(:seconds))}))
     end
   end
 
