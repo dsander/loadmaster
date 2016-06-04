@@ -32,9 +32,17 @@ config :loadmaster, Loadmaster.Repo,
 config :loadmaster, Loadmaster.Endpoint,
   secret_key_base: "${SECRET_KEY_BASE}"
 
+parallel_jobs = case Integer.parse("${PARALLEL_JOBS}") do
+  {i, ""} ->
+    i
+  _ ->
+    1
+end
+
 config :loadmaster,
   migrate_on_boot: true,
-  invitation_token: "${INVITATION_TOKEN}"
+  invitation_token: "${INVITATION_TOKEN}",
+  parallel_jobs: parallel_jobs
 
 # ## SSL Support
 #
