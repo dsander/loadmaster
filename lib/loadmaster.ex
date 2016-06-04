@@ -12,6 +12,8 @@ defmodule Loadmaster do
       # Start the Ecto repository
       supervisor(Loadmaster.Repo, []),
       supervisor(Loadmaster.Builder, [%{}]),
+      supervisor(Loadmaster.JobSupervisor, []),
+      worker(Loadmaster.JobQueue, [])
       # Here you could define other workers and supervisors as children
       # worker(Loadmaster.Worker, [arg1, arg2, arg3]),
     ]
