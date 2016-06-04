@@ -1,7 +1,6 @@
 dist: trusty
 sudo: required
 services:
-  - docker
   - postgresql
 addons:
   postgresql: "9.4"
@@ -15,7 +14,9 @@ cache:
     - _build
     - deps
 env:
-  - MIX_ENV=test
+  global:
+    - DOCKER_VERSION=1.11.1
+    - MIX_ENV=test
 before_install:
   - unzip -d elixir v1.2.5.zip
   - export PATH=`pwd`/elixir/bin:$PATH
@@ -25,4 +26,6 @@ before_script:
 script:
   - mix coveralls.travis
   - mix credo --strict
-after_success: ./build-docker-image.sh
+after_success:
+  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
+  - ./build-docker-image.sh
