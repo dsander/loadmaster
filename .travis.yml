@@ -1,9 +1,9 @@
 dist: trusty
 sudo: required
-services:
-  - postgresql
 addons:
   postgresql: "9.4"
+services:
+  - postgresql
 language: elixir
 elixir:
   - 1.2.5
@@ -15,7 +15,6 @@ cache:
     - deps
 env:
   global:
-    - DOCKER_VERSION=1.11.1
     - MIX_ENV=test
 before_install:
   - unzip -d elixir v1.2.5.zip
@@ -27,5 +26,6 @@ script:
   - mix coveralls.travis
   - mix credo --strict
 after_success:
-  - curl -sLo - http://j.mp/install-travis-docker | sh -xe
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
   - ./build-docker-image.sh
