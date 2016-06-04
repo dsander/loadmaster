@@ -1,10 +1,9 @@
 dist: trusty
 sudo: required
-services:
-  - docker
-  - postgresql
 addons:
   postgresql: "9.4"
+services:
+  - postgresql
 language: elixir
 elixir:
   - 1.2.5
@@ -15,7 +14,8 @@ cache:
     - _build
     - deps
 env:
-  - MIX_ENV=test
+  global:
+    - MIX_ENV=test
 before_install:
   - unzip -d elixir v1.2.5.zip
   - export PATH=`pwd`/elixir/bin:$PATH
@@ -25,4 +25,7 @@ before_script:
 script:
   - mix coveralls.travis
   - mix credo --strict
-after_success: ./build-docker-image.sh
+after_success:
+  - sudo apt-get update
+  - sudo apt-get install -o Dpkg::Options::="--force-confold" --force-yes -y docker-engine
+  - ./build-docker-image.sh
