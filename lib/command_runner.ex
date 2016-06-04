@@ -46,7 +46,7 @@ defmodule Loadmaster.CommandRunner do
 
   defp await(task) do
     if @executor == Porcelain do
-      Task.await(task, 1200_000)
+      Task.await(task, 3600_000)
     else
       task
     end
