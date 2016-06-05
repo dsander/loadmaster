@@ -41,13 +41,6 @@ config :loadmaster, Loadmaster.Repo,
   hostname: "localhost",
   pool_size: 10
 
-parallel_jobs = case Integer.parse(System.get_env("PARALLEL_JOBS") || "") do
-  {i, ""} ->
-    i
-  _ ->
-    1
-end
-
 config :loadmaster,
   invitation_token: System.get_env("INVITATION_TOKEN") || "try-loadmaster",
-  parallel_jobs: parallel_jobs
+  parallel_jobs: System.get_env("PARALLEL_JOBS")
