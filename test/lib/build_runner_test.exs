@@ -1,4 +1,4 @@
-defmodule Loadmaster.BuilderRunnerTest do
+defmodule Loadmaster.BuildRunnerTest do
   use Loadmaster.ModelCase
 
   setup do
