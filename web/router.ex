@@ -8,6 +8,7 @@ defmodule Loadmaster.Router do
     plug :protect_from_forgery
     plug :put_secure_browser_headers
     plug Loadmaster.Auth, repo: Loadmaster.Repo
+    plug Loadmaster.Turbolinks
   end
 
   pipeline :api do

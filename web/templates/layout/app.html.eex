@@ -6,8 +6,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="<%= get_csrf_token() %>">
+    <meta name="csrf-param" content="_csrf_token">
 
     <title>Hello Loadmaster!</title>
+    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
     <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
   </head>
 
@@ -53,6 +56,5 @@
       </main>
 
     </div>
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
   </body>
 </html>

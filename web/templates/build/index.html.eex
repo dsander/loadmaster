@@ -16,7 +16,7 @@
 
       <td class="text-right">
         <%= link "Show", to: repository_build_path(@conn, :show, build.repository_id, build), class: "btn btn-default btn-xs" %>
-        <%= link "Run", to: repository_build_path(@conn, :run, build.repository_id, build), method: :post, class: "btn btn-success btn-xs" %>
+        <%= link "Run", to: repository_build_path(@conn, :run, build.repository_id, build), data: [method: :post, remote: true], class: "btn btn-success btn-xs" %>
       </td>
     </tr>
 <% end %>

@@ -31,6 +31,6 @@ defmodule Loadmaster.BuildController do
 
     conn
     |> put_flash(:info, "Build was restarted.")
-    |> redirect(to: repository_build_path(conn, :show, build.repository_id, build))
+    |> turbolinks_redirect(to: repository_build_path(conn, :show, build.repository_id, build))
   end
 end
