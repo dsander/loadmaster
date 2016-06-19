@@ -11,12 +11,16 @@
 //
 // If you no longer want to use a dependency, remember
 // to also remove its path from "config.paths.watched".
-import "phoenix_html"
 
-// Import local files
-//
-// Local files can be imported directly using relative
-// paths "./socket" or full ones "web/static/js/socket".
+//import "phoenix_html"
+import PhoenixHTML from "./phoenix_html"
+
+$(document).on('turbolinks:load', function (e) {
+  PhoenixHTML.init()
+})
+
+import Turbolinks from "turbolinks"
+Turbolinks.start()
 
 import socket from "./socket"
 import Build from "./build"

@@ -123,7 +123,7 @@ defmodule Loadmaster.JobRunner do
   def update_step_state(step_state = %StepState{}, name, value) do
     data = put_in(step_state.job.data, [name], %{state: value, output: String.split(step_state.output, "\n")})
     job = Repo.update!(Job.changeset(step_state.job, %{data: data}))
-    Endpoint.broadcast("build:#{step_state.build.id}", "update_state", %{job_id: step_state.job.id, step: name, value: value})
+    Endpoint.broadcast("builds", "update_state", %{build_id: step_state.build.id, job_id: step_state.job.id, step: name, value: value})
     %StepState{step_state | job: job, output: ""}
   end
 end

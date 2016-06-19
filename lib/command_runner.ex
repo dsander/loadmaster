@@ -8,7 +8,7 @@ defmodule Loadmaster.CommandRunner do
   def run_command(step_state = %StepState{status: :ok}, name, cmd, options \\ %{}) do
     if Map.get(options, :echo_cmd, true) do
       step_state = %{step_state | output: "Running: " <> cmd}
-      Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: "Running: " <> cmd})
+      Endpoint.broadcast("builds", "output", %{build_id: step_state.build.id, job_id: step_state.job.id, step: name, value: "Running: " <> cmd})
     end
     Task.async(fn ->
       if Map.get(options, :in_docker, true) do
@@ -35,7 +35,7 @@ defmodule Loadmaster.CommandRunner do
         data
         |> String.split("\n")
         |> Enum.reject(fn(string) -> String.strip(string) == "" end)
-        |> Enum.each(fn(row) -> Endpoint.broadcast("build:#{step_state.build.id}", "output", %{job_id: step_state.job.id, step: name, row: row}) end)
+        |> Enum.each(fn(row) -> Endpoint.broadcast("builds", "output", %{build_id: step_state.build.id, job_id: step_state.job.id, step: name, value: row}) end)
         loop(proc, name, step_state, output <> data)
       {^pid, :result, %Porcelain.Result{status: 0}} ->
         %StepState{step_state | status: :ok, output: step_state.output <> output}
