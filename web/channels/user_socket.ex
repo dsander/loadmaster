@@ -2,7 +2,7 @@ defmodule Loadmaster.UserSocket do
   use Phoenix.Socket
 
   # Channels
-  channel "build:*", Loadmaster.BuildChannel
+  channel "builds", Loadmaster.BuildsChannel
 
   # Transports
   transport :websocket, Phoenix.Transports.WebSocket

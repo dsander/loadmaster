@@ -37,6 +37,7 @@ defmodule Loadmaster.Web do
       import Loadmaster.Router.Helpers
       import Loadmaster.Gettext
       import Loadmaster.Auth, only: [authenticate_user: 2]
+      import Loadmaster.Turbolinks
     end
   end
 
