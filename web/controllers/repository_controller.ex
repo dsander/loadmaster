@@ -4,7 +4,7 @@ defmodule Loadmaster.RepositoryController do
   alias Loadmaster.Repository
 
   plug :scrub_params, "repository" when action in [:create, :update]
-  plug :authenticate_user
+  plug :authenticate_user when action in [:show, :new, :create, :edit, :update, :delete]
 
   def index(conn, _params) do
     repositories = Repo.all(Repository)

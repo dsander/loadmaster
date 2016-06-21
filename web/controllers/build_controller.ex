@@ -3,7 +3,7 @@ defmodule Loadmaster.BuildController do
 
   alias Loadmaster.Build
 
-  plug :authenticate_user
+  plug :authenticate_user when action in [:run]
 
   def index(conn, %{"repository_id" => repository_id}) do
     builds =

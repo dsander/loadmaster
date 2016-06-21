@@ -6,6 +6,12 @@
   <% end %>
 
   <div class="form-group">
+    <%= label f, :name, class: "control-label" %>
+    <%= text_input f, :name, class: "form-control" %>
+    <%= error_tag f, :name %>
+  </div>
+
+  <div class="form-group">
     <%= label f, :docker_user, class: "control-label" %>
     <%= text_input f, :docker_user, class: "form-control" %>
     <%= error_tag f, :docker_user %>
@@ -21,6 +27,12 @@
     <%= label f, :docker_password, class: "control-label" %>
     <%= password_input f, :docker_password, class: "form-control" %>
     <%= error_tag f, :docker_password %>
+  </div>
+
+  <div class="form-group">
+    <%= label f, :github_token, class: "control-label" %>
+    <%= password_input f, :github_token, class: "form-control" %>
+    <%= error_tag f, :github_token %>
   </div>
 
   <div class="form-group">

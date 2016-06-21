@@ -3,9 +3,12 @@
 <table class="table">
   <thead>
     <tr>
-      <th>Token</th>
-      <th>Docker user</th>
-      <th>Docker email</th>
+      <th>Name</th>
+      <%= if @current_user do %>
+        <th>Token</th>
+        <th>Docker user</th>
+        <th>Docker email</th>
+      <% end %>
 
       <th></th>
     </tr>
@@ -13,15 +16,20 @@
   <tbody>
 <%= for repository <- @repositories do %>
     <tr>
-      <td><%= repository.token %></td>
-      <td><%= repository.docker_user %></td>
-      <td><%= repository.docker_email %></td>
+        <td><%= repository.name %></td>
+      <%= if @current_user do %>
+        <td><%= repository.token %></td>
+        <td><%= repository.docker_user %></td>
+        <td><%= repository.docker_email %></td>
+      <% end %>
 
       <td class="text-right">
-        <%= link "Show", to: repository_path(@conn, :show, repository), class: "btn btn-default btn-xs" %>
-        <%= link "Edit", to: repository_path(@conn, :edit, repository), class: "btn btn-default btn-xs" %>
-        <%= link "Delete", to: repository_path(@conn, :delete, repository), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
-        <%= link "Images", to: repository_image_path(@conn, :index, repository), class: "btn btn-default btn-xs" %>
+        <%= if @current_user do %>
+          <%= link "Show", to: repository_path(@conn, :show, repository), class: "btn btn-default btn-xs" %>
+          <%= link "Edit", to: repository_path(@conn, :edit, repository), class: "btn btn-default btn-xs" %>
+          <%= link "Delete", to: repository_path(@conn, :delete, repository), method: :delete, data: [confirm: "Are you sure?"], class: "btn btn-danger btn-xs" %>
+          <%= link "Images", to: repository_image_path(@conn, :index, repository), class: "btn btn-default btn-xs" %>
+        <% end %>
         <%= link "Builds", to: repository_build_path(@conn, :index, repository), class: "btn btn-default btn-xs" %>
       </td>
     </tr>

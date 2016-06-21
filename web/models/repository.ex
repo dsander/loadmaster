@@ -2,18 +2,20 @@ defmodule Loadmaster.Repository do
   use Loadmaster.Web, :model
 
   schema "repositories" do
+    field :name, :string
     field :token, :string
     field :docker_user, :string
     field :docker_email, :string
     field :docker_password, :string
+    field :github_token, :string
     has_many :images, Loadmaster.Image
     has_many :builds, Loadmaster.Build
 
     timestamps
   end
 
-  @required_fields ~w(docker_user docker_email docker_password)
-  @optional_fields ~w()
+  @required_fields ~w(name docker_user docker_email docker_password)
+  @optional_fields ~w(github_token)
 
   @doc """
   Creates a changeset based on the `model` and `params`.
