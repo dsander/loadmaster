@@ -14,9 +14,6 @@ config :loadmaster, Loadmaster.Endpoint,
   pubsub: [name: Loadmaster.PubSub,
            adapter: Phoenix.PubSub.PG2]
 
-config :loadmaster,
-  domain: 'https://loadmaster.ngrok.io'
-
 # Configures Elixir's Logger
 config :logger, :console,
   format: "$time $metadata[$level] $message\n",

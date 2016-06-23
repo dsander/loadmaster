@@ -17,6 +17,7 @@ config :loadmaster, Loadmaster.Endpoint,
   cache_static_manifest: "priv/static/manifest.json",
   check_origin: ["//${VIRTUAL_HOST}"],
   server: true
+  domain: "${VIRTUAL_HOST}"
 
 # Do not print debug messages in production
 config :logger, level: :info
