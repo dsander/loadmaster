@@ -3,7 +3,7 @@ defmodule Loadmaster.RepositoryTest do
 
   alias Loadmaster.Repository
 
-  @valid_attrs %{build_commands: "some content", docker_email: "some content", docker_password: "some content", docker_user: "some content", token: "some content"}
+  @valid_attrs %{build_commands: "some content", docker_email: "some content", docker_password: "some content", docker_user: "some content", token: "some content", name: "test"}
   @invalid_attrs %{}
 
   test "changeset with valid attributes" do

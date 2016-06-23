@@ -38,8 +38,11 @@ defmodule Loadmaster.WebhookControllerTest do
 
   test "handle starts a build when needed", %{conn: conn, repository: repository} do
     insert_image(repository)
-    conn = post conn, webhook_path(conn, :handle, repository.token), %{"action" => "opened", "pull_request" => %{"number" => 1234}, "repository" => %{"clone_url" => "git://my_clone_url"}}
-
+    conn = post conn, webhook_path(conn, :handle, repository.token), %{"action" => "opened", "pull_request" => %{"number" => 1234, "head" => %{"sha" => "4e31309c3441f0f7ab2b3baca5f68d43e32657d4"}}, "repository" => %{"clone_url" => "git://my_clone_url"}}
     assert json_response(conn, 200) == "ok"
+
+    build = Repo.one(from b in Loadmaster.Build, order_by: [desc: b.id], limit: 1)
+    assert build.git_remote == "git://my_clone_url"
+    assert build.commit_sha == "4e31309c3441f0f7ab2b3baca5f68d43e32657d4"
   end
 end

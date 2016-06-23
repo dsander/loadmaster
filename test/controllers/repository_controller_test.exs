@@ -3,7 +3,7 @@ defmodule Loadmaster.RepositoryControllerTest do
   import Loadmaster.TestHelpers
 
   alias Loadmaster.Repository
-  @valid_attrs %{docker_email: "some content", docker_password: "some content", docker_user: "some content"}
+  @valid_attrs %{docker_email: "some content", docker_password: "some content", docker_user: "some content", name: "test"}
   @invalid_attrs %{}
 
   setup do

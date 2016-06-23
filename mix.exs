@@ -21,7 +21,8 @@ defmodule Loadmaster.Mixfile do
   def application do
     [mod: {Loadmaster, []},
      applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
-                    :phoenix_ecto, :postgrex, :comeonin, :porcelain]]
+                    :phoenix_ecto, :postgrex, :comeonin, :porcelain,
+                    :tentacat]]
   end
 
   # Specifies which paths to compile per environment.
@@ -45,7 +46,8 @@ defmodule Loadmaster.Mixfile do
      {:excoveralls, "~> 0.5", only: :test},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:edib, "~>  0.7.0", only: :dev},
-     {:credo, "~> 0.3", only: [:dev, :test]}
+     {:credo, "~> 0.3", only: [:dev, :test]},
+     {:tentacat, "~> 0.5"}
     ]
   end
 
