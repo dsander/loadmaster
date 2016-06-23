@@ -15,10 +15,11 @@ docker run --rm \
   -e RELEASE_STRIP=true \
   edib/edib-tool:1.3.0
 
-docker build --build-arg VERSION=$VERSION -t dsander/loadmaster:$VERSION .
+docker build --build-arg VERSION=$VERSION -t dsander/loadmaster .
 
 if [[ "${CI}" == 'true' ]]; then
   docker login -u $DOCKER_USER -p $DOCKER_PASS
-  docker push dsander/loadmaster:$VERSION
+  docker tag dsander/loadmaster dsander/loadmaster:$VERSION
   docker push dsander/loadmaster
+  docker push dsander/loadmaster:$VERSION
 fi
