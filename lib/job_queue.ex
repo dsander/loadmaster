@@ -22,6 +22,8 @@ defmodule Loadmaster.JobQueue do
   def handle_call({:enqueue, job}, _from, %{jobs: queue, parallel_jobs: parallel_jobs} = state) do
     %{active: active_workers} = Supervisor.count_children(Loadmaster.JobSupervisor)
 
+    Loadmaster.GithubStatus.update(job, %{state: "pending", message: "Docker image build is running."})
+
     if active_workers >= parallel_jobs do
       state = %{state | jobs: :queue.in(job, queue)}
       {:reply, :queued, state}

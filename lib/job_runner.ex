@@ -96,6 +96,7 @@ defmodule Loadmaster.JobRunner do
 
   def step(step_state = %StepState{status: _}, name = :teardown) do
     step_state
+    |> update_github_status
     |> Map.put(:status, :ok)
     |> start_step_processing(name)
     |> @command_runner.run_command(name, "docker rm -f #{@command_runner.container_name(step_state)}", %{echo_cmd: false, in_docker: false})
@@ -125,5 +126,15 @@ defmodule Loadmaster.JobRunner do
     job = Repo.update!(Job.changeset(step_state.job, %{data: data}))
     Endpoint.broadcast("builds", "update_state", %{build_id: step_state.build.id, job_id: step_state.job.id, step: name, value: value})
     %StepState{step_state | job: job, output: ""}
+  end
+
+  def update_github_status(step_state = %StepState{status: :ok}) do
+    Loadmaster.GithubStatus.update(step_state.job.id, %{state: "success", message: "Docker image build successful."})
+    step_state
+  end
+
+  def update_github_status(step_state = %StepState{status: :error}) do
+    Loadmaster.GithubStatus.update(step_state.job.id, %{state: "failure", message: "Docker image build failed."})
+    step_state
   end
 end

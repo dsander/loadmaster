@@ -14,7 +14,7 @@ defmodule Loadmaster.WebhookController do
     build =
       repository
       |> build_assoc(:builds)
-      |> Build.changeset(%{pull_request_id: pull_request["number"], git_remote: params["repository"]["clone_url"]})
+      |> Build.changeset(%{pull_request_id: pull_request["number"], git_remote: params["repository"]["clone_url"], commit_sha: pull_request["head"]["sha"]})
       |> Build.run(repository)
 
     @builder.build(build.id)

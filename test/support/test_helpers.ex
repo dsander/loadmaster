@@ -15,13 +15,13 @@ defmodule Loadmaster.TestHelpers do
     |> Repo.insert!
   end
 
-  def insert_repository(attrs \\ %{docker_email: "some content", docker_password: "some content", docker_user: "some content"}) do
+  def insert_repository(attrs \\ %{docker_email: "some content", docker_password: "some content", docker_user: "some content", name: "test_repo"}) do
     %Loadmaster.Repository{}
     |> Loadmaster.Repository.changeset(attrs)
     |> Repo.insert!
   end
 
-  def insert_build(repository \\ insert_repository, attrs \\ %{pull_request_id: 42, git_remote: "git://github.com"}) do
+  def insert_build(repository \\ insert_repository, attrs \\ %{pull_request_id: 42, git_remote: "git://github.com/dsander/huginn.git", commit_sha: "234kdfjsldkfjs"}) do
     repository
     |> build_assoc(:builds)
     |> Loadmaster.Build.changeset(attrs)

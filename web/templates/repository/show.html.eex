@@ -2,6 +2,11 @@
 
 <ul>
   <li>
+    <strong>Name:</strong>
+    <%= @repository.name %>
+  </li>
+
+  <li>
     <strong>Docker user:</strong>
     <%= @repository.docker_user %>
   </li>

@@ -13,7 +13,8 @@ defmodule Loadmaster do
       supervisor(Loadmaster.Repo, []),
       supervisor(Loadmaster.Builder, [%{}]),
       supervisor(Loadmaster.JobSupervisor, []),
-      worker(Loadmaster.JobQueue, [])
+      worker(Loadmaster.JobQueue, []),
+      worker(Loadmaster.GithubStatus, [])
       # Here you could define other workers and supervisors as children
       # worker(Loadmaster.Worker, [arg1, arg2, arg3]),
     ]

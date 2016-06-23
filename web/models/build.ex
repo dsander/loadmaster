@@ -7,13 +7,14 @@ defmodule Loadmaster.Build do
   schema "builds" do
     field :pull_request_id, :integer
     field :git_remote, :string
+    field :commit_sha, :string
     belongs_to :repository, Loadmaster.Repository
     has_many :jobs, Loadmaster.Job
 
     timestamps
   end
 
-  @required_fields ~w(pull_request_id repository_id git_remote)
+  @required_fields ~w(pull_request_id repository_id git_remote commit_sha)
   @optional_fields ~w()
 
   @doc """
@@ -24,7 +25,7 @@ defmodule Loadmaster.Build do
   """
   def changeset(model, params \\ :empty) do
     model
-    |> cast(params, [:pull_request_id, :repository_id, :git_remote], @optional_fields)
+    |> cast(params, [:pull_request_id, :repository_id, :git_remote, :commit_sha], @optional_fields)
     |> assoc_constraint(:repository)
   end
 
@@ -64,5 +65,10 @@ defmodule Loadmaster.Build do
       end
     end
     build
+  end
+
+  def split_git_remote(%Build{git_remote: git_remote} = build) do
+    %{"user" => user, "repository" => repository} = Regex.named_captures(~r/\/(?<user>[^\/]+)\/(?<repository>[^\/]+)\.git\z/, git_remote)
+    {user, repository}
   end
 end
