@@ -30,7 +30,7 @@ defmodule Loadmaster.GithubStatus do
   defp body(%{build: build, repository: repository, image: image}, %{state: pr_state, message: message}) do
     %{
       "state": pr_state,
-      "target_url": "#{Application.get_env(:loadmaster, :domain)}/repositories/#{repository.id}/builds/#{build.id}",
+      "target_url": "http://#{Application.get_env(:loadmaster, :domain)}/repositories/#{repository.id}/builds/#{build.id}",
       "description": message,
       "context": "#{image.name}:pr-#{build.pull_request_id}"
     }

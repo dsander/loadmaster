@@ -23,7 +23,7 @@
 
   <li>
     <strong>Webhook URL</strong>
-    <%= Application.get_env(:loadmaster, :domain) %><%= webhook_path(@conn, :handle, @repository.token) %>
+    http://<%= Application.get_env(:loadmaster, :domain) %><%= webhook_path(@conn, :handle, @repository.token) %>
   </li>
 </ul>
 
