@@ -20,7 +20,7 @@ defmodule Loadmaster.Mixfile do
   # Type `mix help compile.app` for more information.
   def application do
     [mod: {Loadmaster, []},
-     applications: [:phoenix, :phoenix_html, :cowboy, :logger, :gettext,
+     applications: [:phoenix, :phoenix_pubsub, :phoenix_html, :cowboy, :logger, :gettext,
                     :phoenix_ecto, :postgrex, :comeonin, :porcelain,
                     :tentacat]]
   end
@@ -33,21 +33,23 @@ defmodule Loadmaster.Mixfile do
   #
   # Type `mix help deps` for examples and options.
   defp deps do
-    [{:phoenix, "~> 1.1.6"},
-     {:postgrex, "~> 0.11.1"},
-     {:phoenix_ecto, "~> 2.0"},
-     {:phoenix_html, "~> 2.6.1"},
+    [{:phoenix, "~> 1.2.0"},
+     {:postgrex, "~> 0.13.0"},
+     {:phoenix_ecto, "~> 3.2.0"},
+     {:phoenix_html, "~> 2.9.0"},
+     {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
      {:gettext, "~> 0.9"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 2.4"},
-     {:exrm, "~> 1.0.4"},
+     #{:exrm, "~> 1.0.4"},
      {:porcelain, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: :test},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:edib, "~>  0.7.0", only: :dev},
      {:credo, "~> 0.3", only: [:dev, :test]},
-     {:tentacat, "~> 0.5"}
+     {:tentacat, "~> 0.5"},
+     {:erlware_commons, "0.21.0"}
     ]
   end
 
@@ -59,6 +61,7 @@ defmodule Loadmaster.Mixfile do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     ["ecto.setup": ["ecto.create", "ecto.migrate", "run priv/repo/seeds.exs"],
-     "ecto.reset": ["ecto.drop", "ecto.setup"]]
+     "ecto.reset": ["ecto.drop", "ecto.setup"],
+    "test": ["ecto.create --quiet", "ecto.migrate", "test"]]
   end
 end

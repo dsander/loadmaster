@@ -25,7 +25,7 @@ defmodule Loadmaster.Repository do
   """
   def changeset(model) do
     model
-    |> cast(:empty, @required_fields, @optional_fields)
+    |> cast(%{}, @required_fields, @optional_fields)
   end
 
   def changeset(model = %{token: nil}, params) do

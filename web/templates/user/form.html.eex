@@ -5,7 +5,7 @@
     </div>
   <% end %>
 
-  <%= unless @changeset.model.id do %>
+  <%= unless @changeset.data.id do %>
     <div class="form-group">
       <%= label f, :invitation_token, class: "control-label" %>
       <%= text_input f, :invitation_token, class: "form-control" %>

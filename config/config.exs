@@ -12,7 +12,8 @@ config :loadmaster, Loadmaster.Endpoint,
   secret_key_base: "pF8F8jg/x2RDIUSZI1172EViDR0MUZ6JU/F7wFRW7fWzF+LNFGtWXZKHC0O4s6xq",
   render_errors: [accepts: ~w(html json)],
   pubsub: [name: Loadmaster.PubSub,
-           adapter: Phoenix.PubSub.PG2]
+           adapter: Phoenix.PubSub.PG2],
+  ecto_repos: [Loadmaster.Repo]
 
 # Configures Elixir's Logger
 config :logger, :console,
