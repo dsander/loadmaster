@@ -55,12 +55,12 @@ defmodule Loadmaster.Build do
     build =
       Build
       |> Repo.get!(id)
-      |> Repo.preload(jobs: :image)
+      |> Repo.preload(:jobs)
 
     {:ok, _} = Repo.transaction fn ->
       for job <- build.jobs do
         job
-        |> Job.create_changeset(%{image_id: job.image.id, state: "pending"})
+        |> Job.create_changeset(%{state: "pending"})
         |> Repo.update!
       end
     end
