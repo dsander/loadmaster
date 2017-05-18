@@ -11,8 +11,8 @@ defmodule Loadmaster.Mixfile do
      start_permanent: Mix.env == :prod,
      test_coverage: [tool: ExCoveralls],
      preferred_cli_env: ["coveralls": :test, "coveralls.detail": :test, "coveralls.post": :test, "coveralls.html": :test],
-     aliases: aliases,
-     deps: deps]
+     aliases: aliases(),
+     deps: deps()]
   end
 
   # Configuration for the OTP application.
@@ -39,15 +39,15 @@ defmodule Loadmaster.Mixfile do
      {:phoenix_html, "~> 2.9.0"},
      {:phoenix_pubsub, "~> 1.0"},
      {:phoenix_live_reload, "~> 1.0", only: :dev},
-     {:gettext, "~> 0.9"},
+     {:gettext, "~> 0.13.0"},
      {:cowboy, "~> 1.0"},
-     {:comeonin, "~> 2.4"},
+     {:comeonin, "~> 3.0"},
      #{:exrm, "~> 1.0.4"},
      {:porcelain, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: :test},
      {:mix_test_watch, "~> 0.2", only: :dev},
-     {:edib, "~>  0.7.0", only: :dev},
-     {:credo, "~> 0.3", only: [:dev, :test]},
+     {:edib, "~>  0.10.0", only: :dev},
+     {:credo, "~> 0.7", only: [:dev, :test]},
      {:tentacat, "~> 0.5"},
      {:erlware_commons, "0.21.0"}
     ]
