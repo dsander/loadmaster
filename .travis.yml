@@ -6,9 +6,9 @@ services:
   - postgresql
 language: elixir
 elixir:
-  - 1.2.5
+  - 1.4.4
 otp_release:
-  - 18.2.1
+  - 19.2
 cache:
   directories:
     - _build
@@ -16,12 +16,6 @@ cache:
 env:
   global:
     - MIX_ENV=test
-before_install:
-  - unzip -d elixir v1.2.5.zip
-  - export PATH=`pwd`/elixir/bin:$PATH
-before_script:
-  - mix local.rebar
-  - mix compile
 script:
   - mix coveralls.travis
   - mix credo --strict

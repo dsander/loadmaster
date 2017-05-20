@@ -11,10 +11,11 @@ mix compile
 VERSION=`mix loadmaster.version`
 
 docker run --rm \
-  -v `pwd`:/source \
-  -v `pwd`/tarballs:/stage/tarballs \
+  -v `pwd`:/source:ro \
+  -v `pwd`/tarballs:/stage/tarballs:rw \
   -e RELEASE_STRIP=true \
-  edib/edib-tool:1.3.0
+  -e MIX_ENV=prod \
+  edib/edib-tool:1.6.0
 
 docker build --build-arg VERSION=$VERSION -t dsander/loadmaster:latest .
 

@@ -42,7 +42,7 @@ defmodule Loadmaster.Mixfile do
      {:gettext, "~> 0.13.0"},
      {:cowboy, "~> 1.0"},
      {:comeonin, "~> 3.0"},
-     #{:exrm, "~> 1.0.4"},
+     {:distillery, "~> 1.4"},
      {:porcelain, "~> 2.0"},
      {:excoveralls, "~> 0.5", only: :test},
      {:mix_test_watch, "~> 0.2", only: :dev},
