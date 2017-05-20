@@ -25,7 +25,8 @@ defmodule Loadmaster.Build do
   """
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, [:pull_request_id, :repository_id, :git_remote, :commit_sha], @optional_fields)
+    |> cast(params, [:pull_request_id, :repository_id, :git_remote, :commit_sha])
+    |> validate_required([:pull_request_id, :repository_id, :git_remote, :commit_sha])
     |> assoc_constraint(:repository)
   end
 

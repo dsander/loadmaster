@@ -10,7 +10,7 @@ defmodule Loadmaster.Job do
     timestamps
   end
 
-  @required_fields ~w(state data image_id build_id)
+  @required_fields [:state, :data, :image_id, :build_id]
   @optional_fields ~w()
   @initial_data %{
                   setup: %{state: "pending", output: []},
@@ -29,15 +29,17 @@ defmodule Loadmaster.Job do
   """
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields)
+    |> validate_required(@required_fields)
     |> assoc_constraint(:build)
     |> assoc_constraint(:image)
   end
 
   def create_changeset(model, params) do
     model
-    |> cast(params, [:state, :image_id, :build_id], [])
+    |> cast(params, [:state, :image_id, :build_id])
     |> put_change(:data, @initial_data)
+    |> validate_required(@required_fields)
     |> assoc_constraint(:build)
     |> assoc_constraint(:image)
   end

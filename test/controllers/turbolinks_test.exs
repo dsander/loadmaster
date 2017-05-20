@@ -70,30 +70,30 @@ defmodule Loadmaster.TurbolinksTest do
   end
 
   test "turbolinks_redirect/2 with :to" do
-    conn = Turbolinks.turbolinks_redirect(conn(:get, "/"), to: "/foobar")
+    conn = Turbolinks.turbolinks_redirect(build_conn(:get, "/"), to: "/foobar")
     assert conn.resp_body =~ "/foobar"
     assert get_resp_content_type(conn) == "text/html"
     assert get_resp_header(conn, "location") == ["/foobar"]
     refute conn.halted
 
-    conn = Turbolinks.turbolinks_redirect(conn(:get, "/"), to: "/<foobar>")
+    conn = Turbolinks.turbolinks_redirect(build_conn(:get, "/"), to: "/<foobar>")
     assert conn.resp_body =~ "/&lt;foobar&gt;"
 
     assert_raise ArgumentError, ~r/the :to option in redirect expects a path/, fn ->
-      Turbolinks.turbolinks_redirect(conn(:get, "/"), to: "http://example.com")
+      Turbolinks.turbolinks_redirect(build_conn(:get, "/"), to: "http://example.com")
     end
 
     assert_raise ArgumentError, ~r/the :to option in redirect expects a path/, fn ->
-      Turbolinks.turbolinks_redirect(conn(:get, "/"), to: "//example.com")
+      Turbolinks.turbolinks_redirect(build_conn(:get, "/"), to: "//example.com")
     end
 
     assert_raise ArgumentError, ~r/expected :to or :external option in /, fn ->
-      Turbolinks.turbolinks_redirect(conn(:get, "/"), foo: :bar)
+      Turbolinks.turbolinks_redirect(build_conn(:get, "/"), foo: :bar)
     end
   end
 
   test "turbolinks_redirect/2 with :external" do
-    conn = Turbolinks.turbolinks_redirect(conn(:get, "/"), external: "http://example.com")
+    conn = Turbolinks.turbolinks_redirect(build_conn(:get, "/"), external: "http://example.com")
     assert conn.resp_body =~ "http://example.com"
     assert get_resp_header(conn, "location") == ["http://example.com"]
     refute conn.halted

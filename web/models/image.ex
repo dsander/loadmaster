@@ -12,8 +12,7 @@ defmodule Loadmaster.Image do
     timestamps
   end
 
-  @required_fields ~w(name cache_image dockerfile context repository_id)
-  @optional_fields ~w()
+  @fields [:name, :cache_image, :dockerfile, :context, :repository_id]
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -23,7 +22,8 @@ defmodule Loadmaster.Image do
   """
   def changeset(model, params \\ %{}) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @fields)
+    |> validate_required(@fields)
     |> assoc_constraint(:repository)
   end
 end
