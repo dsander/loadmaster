@@ -4,7 +4,7 @@ defmodule Loadmaster.CommandRunner do
 
   @executor Application.get_env(:loadmaster, :command_executor) || Porcelain
 
-  @lint {Credo.Check.Refactor.PipeChainStart, false}
+  # credo:disable-for-lines:16 Credo.Check.Refactor.PipeChainStart
   def run_command(step_state, name, cmd, options \\ %{})
   def run_command(step_state = %StepState{status: :ok}, name, cmd, options) do
     step_state = if Map.get(options, :echo_cmd, true) do
@@ -47,7 +47,7 @@ defmodule Loadmaster.CommandRunner do
 
   defp await(task) do
     if @executor == Porcelain do
-      Task.await(task, 3600_000)
+      Task.await(task, 3_600_000)
     else
       task
     end

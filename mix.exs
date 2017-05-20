@@ -47,7 +47,7 @@ defmodule Loadmaster.Mixfile do
      {:excoveralls, "~> 0.5", only: :test},
      {:mix_test_watch, "~> 0.2", only: :dev},
      {:edib, "~>  0.10.0", only: :dev},
-     {:credo, "~> 0.7", only: [:dev, :test]},
+     {:credo, "~> 0.8.0-rc4", only: [:dev, :test]},
      {:tentacat, "~> 0.5"},
      {:erlware_commons, "0.21.0"}
     ]

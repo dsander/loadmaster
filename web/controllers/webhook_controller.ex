@@ -30,7 +30,7 @@ defmodule Loadmaster.WebhookController do
     |> json(:ok)
   end
 
-  def handle(conn, %{"action" => _} = params) do
+  def handle(conn, params = %{"action" => _}) do
     if System.get_env("MIX_ENV") == "prod" do
       conn
       |> put_status(405)

@@ -1,4 +1,5 @@
 defmodule Loadmaster.JobQueue do
+  alias Loadmaster.JobSupervisor
   use GenServer
 
   defmodule State do
@@ -19,8 +20,8 @@ defmodule Loadmaster.JobQueue do
     {:ok, state}
   end
 
-  def handle_call({:enqueue, job}, _from, %{jobs: queue, parallel_jobs: parallel_jobs} = state) do
-    %{active: active_workers} = Supervisor.count_children(Loadmaster.JobSupervisor)
+  def handle_call({:enqueue, job}, _from, state = %{jobs: queue, parallel_jobs: parallel_jobs}) do
+    %{active: active_workers} = Supervisor.count_children(JobSupervisor)
 
     Loadmaster.GithubStatus.update(job, %{state: "pending", message: "Docker image build is running."})
 
@@ -33,7 +34,7 @@ defmodule Loadmaster.JobQueue do
     end
   end
 
-  def handle_info({:DOWN, _ref, _, _pid, :normal}, %{jobs: queue} = state) do
+  def handle_info({:DOWN, _ref, _, _pid, :normal}, state = %{jobs: queue}) do
     case :queue.out(queue) do
       {{:value, job}, rest} ->
         start_job(job)
@@ -46,7 +47,7 @@ defmodule Loadmaster.JobQueue do
   def handle_info({:DOWN, _ref, _, _, :noproc}, state), do: {:noreply, state}
 
   defp start_job(job) do
-    {:ok, runner} = Supervisor.start_child(Loadmaster.JobSupervisor, [job])
+    {:ok, runner} = Supervisor.start_child(JobSupervisor, [job])
     Process.monitor(runner)
   end
 

@@ -60,7 +60,7 @@ defmodule Loadmaster.UserController do
     |> redirect(to: page_path(conn, :index))
   end
 
-  def user_owned(%{params: %{"id" => id}} = conn, _opts) do
+  def user_owned(conn = %{params: %{"id" => id}}, _opts) do
     if conn.assigns.current_user.id != String.to_integer(id) do
       conn
       |> put_flash(:error, "User not found")
