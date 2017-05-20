@@ -1,12 +1,6 @@
 #!/bin/bash
 set -e
 
-
-if [[ "${CI}" == 'true' && "${TRAVIS_BRANCH}" != "master" && -z "${TRAVIS_TAG}" ]]; then
-  echo "Not building docker image for non-master/tagged commits"
-  exit 0
-fi
-
 mix compile
 VERSION=`mix loadmaster.version`
 
