@@ -9,7 +9,7 @@ defmodule Loadmaster.Image do
     belongs_to :repository, Loadmaster.Repository
     has_many :jobs, Loadmaster.Job
 
-    timestamps
+    timestamps()
   end
 
   @fields [:name, :cache_image, :dockerfile, :context, :repository_id]

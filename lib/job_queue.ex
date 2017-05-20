@@ -6,7 +6,7 @@ defmodule Loadmaster.JobQueue do
   end
 
   def start_link do
-    state = %State{jobs: :queue.new(), parallel_jobs: get_parallel_jobs}
+    state = %State{jobs: :queue.new(), parallel_jobs: get_parallel_jobs()}
     GenServer.start_link(__MODULE__, state, name: __MODULE__)
   end
 

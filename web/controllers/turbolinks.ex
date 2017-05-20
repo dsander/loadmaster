@@ -4,7 +4,7 @@ defmodule Loadmaster.Turbolinks do
 
   def init(opts), do: opts
 
-  def call(%{req_headers: req_headers} = conn, opts) do
+  def call(conn, _opts) do
     conn
     |> set_turbolinks_location_header_from_session
   end
@@ -20,8 +20,10 @@ defmodule Loadmaster.Turbolinks do
       |> set_content_type("text/javascript; charset=utf-8")
       |> send_resp(306, body)
     else
-      if List.keyfind(req_headers, "turbolinks-referrer", 0) do
-        conn = store_turbolinks_location_in_session(conn, location)
+      conn = if List.keyfind(req_headers, "turbolinks-referrer", 0) do
+        store_turbolinks_location_in_session(conn, location)
+      else
+        conn
       end
       redirect(conn, opts)
     end
@@ -64,7 +66,7 @@ defmodule Loadmaster.Turbolinks do
     end
   end
 
-  defp store_turbolinks_location_in_session(%{resp_headers: resp_headers} = conn, location) do
+  defp store_turbolinks_location_in_session(conn, location) do
     put_session(conn, :_turbolink_location, location)
   end
 end

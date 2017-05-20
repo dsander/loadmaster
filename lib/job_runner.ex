@@ -7,7 +7,6 @@ defmodule Loadmaster.JobRunner do
   alias Loadmaster.Repo
   alias Loadmaster.BuildRunner.StepState
   alias Loadmaster.Endpoint
-  alias Loadmaster.Build
   alias Loadmaster.Job
 
   def start_link(job) do

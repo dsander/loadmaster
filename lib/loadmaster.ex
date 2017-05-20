@@ -25,7 +25,7 @@ defmodule Loadmaster do
     start_link = Supervisor.start_link(children, opts)
 
     if Application.get_env(:loadmaster, :migrate_on_boot) && System.get_env("DO_NOT_MIGRATE") == nil do
-      migrate
+      migrate()
     end
 
     start_link

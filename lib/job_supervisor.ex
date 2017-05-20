@@ -5,7 +5,7 @@ defmodule Loadmaster.JobSupervisor do
     Supervisor.start_link(__MODULE__, {}, name: __MODULE__)
   end
 
-  def init(state) do
+  def init(_) do
     supervise([worker(Loadmaster.JobRunner, [], [restart: :temporary, function: :start_link])],
               [strategy: :simple_one_for_one,
                max_restarts: 5,

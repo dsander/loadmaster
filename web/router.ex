@@ -22,8 +22,8 @@ defmodule Loadmaster.Router do
     resources "/users", UserController, except: [:index, :show]
     resources "/sessions", SessionController, only: [:new, :create, :delete]
     resources "/repositories", RepositoryController do
-      resources "images", ImageController, except: [:show]
-      resources "builds", BuildController, only: [:index, :show]
+      resources "/images", ImageController, except: [:show]
+      resources "/builds", BuildController, only: [:index, :show]
       post "/builds/:id/run", BuildController, :run
     end
   end

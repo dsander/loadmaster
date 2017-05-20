@@ -8,7 +8,7 @@ defmodule Loadmaster.User do
     field :password_hash, :string
     field :invitation_token, :string, virtual: true
 
-    timestamps
+    timestamps()
   end
 
   @required_fields [:username, :email, :password]

@@ -11,7 +11,7 @@ defmodule Loadmaster.Repository do
     has_many :images, Loadmaster.Image
     has_many :builds, Loadmaster.Build
 
-    timestamps
+    timestamps()
   end
 
   @required_fields [:name, :docker_user, :docker_email, :docker_password]

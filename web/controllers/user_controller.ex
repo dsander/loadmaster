@@ -39,7 +39,7 @@ defmodule Loadmaster.UserController do
     changeset = User.update_changeset(user, user_params)
 
     case Repo.update(changeset) do
-      {:ok, user} ->
+      {:ok, _user} ->
         conn
         |> put_flash(:info, "User updated successfully.")
         |> redirect(to: page_path(conn, :index))
@@ -60,7 +60,7 @@ defmodule Loadmaster.UserController do
     |> redirect(to: page_path(conn, :index))
   end
 
-  def user_owned(%{params: %{"id" => id}} = conn, opts) do
+  def user_owned(%{params: %{"id" => id}} = conn, _opts) do
     if conn.assigns.current_user.id != String.to_integer(id) do
       conn
       |> put_flash(:error, "User not found")

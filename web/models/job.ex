@@ -7,11 +7,10 @@ defmodule Loadmaster.Job do
     belongs_to :build, Loadmaster.Build
     belongs_to :image, Loadmaster.Image
 
-    timestamps
+    timestamps()
   end
 
   @required_fields [:state, :data, :image_id, :build_id]
-  @optional_fields ~w()
   @initial_data %{
                   setup: %{state: "pending", output: []},
                   login: %{state: "pending", output: []},
