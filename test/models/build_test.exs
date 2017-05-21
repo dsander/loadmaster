@@ -8,7 +8,7 @@ defmodule Loadmaster.BuildTest do
 
   test "changeset with valid attributes" do
     changeset =
-      insert_repository
+      insert_repository()
       |> build_assoc(:builds)
       |> Build.changeset(@valid_attrs)
 

@@ -7,8 +7,8 @@ defmodule Loadmaster.JobRunner do
   alias Loadmaster.Repo
   alias Loadmaster.BuildRunner.StepState
   alias Loadmaster.Endpoint
-  alias Loadmaster.Build
   alias Loadmaster.Job
+  alias Loadmaster.GithubStatus
 
   def start_link(job) do
     GenServer.start_link(__MODULE__, %{job_id: job})
@@ -28,7 +28,7 @@ defmodule Loadmaster.JobRunner do
   end
 
   @command_runner Application.get_env(:loadmaster, :command_runner) || Loadmaster.CommandRunner
-  def handle_cast(:run, %{job_id: job_id} = state) do
+  def handle_cast(:run, state = %{job_id: job_id}) do
     job =
       Job
       |> Repo.get!(job_id)
@@ -129,12 +129,12 @@ defmodule Loadmaster.JobRunner do
   end
 
   def update_github_status(step_state = %StepState{status: :ok}) do
-    Loadmaster.GithubStatus.update(step_state.job.id, %{state: "success", message: "Docker image build successful."})
+    GithubStatus.update(step_state.job.id, %{state: "success", message: "Docker image build successful."})
     step_state
   end
 
   def update_github_status(step_state = %StepState{status: :error}) do
-    Loadmaster.GithubStatus.update(step_state.job.id, %{state: "failure", message: "Docker image build failed."})
+    GithubStatus.update(step_state.job.id, %{state: "failure", message: "Docker image build failed."})
     step_state
   end
 end

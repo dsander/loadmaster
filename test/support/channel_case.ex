@@ -32,8 +32,10 @@ defmodule Loadmaster.ChannelCase do
   end
 
   setup tags do
+    :ok = Ecto.Adapters.SQL.Sandbox.checkout(Loadmaster.Repo)
+
     unless tags[:async] do
-      Ecto.Adapters.SQL.restart_test_transaction(Loadmaster.Repo, [])
+      Ecto.Adapters.SQL.Sandbox.mode(Loadmaster.Repo, {:shared, self()})
     end
 
     :ok

@@ -8,11 +8,11 @@ defmodule Loadmaster.User do
     field :password_hash, :string
     field :invitation_token, :string, virtual: true
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(username email password)
-  @optional_fields ~w(invitation_token)
+  @required_fields [:username, :email, :password]
+  @allowed_fields [:invitation_token] ++ @required_fields
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -20,14 +20,16 @@ defmodule Loadmaster.User do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+    |> validate_required(@required_fields)
   end
 
   def registration_changeset(model, params) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+    |> validate_required(@required_fields)
     |> validate_length(:password, min: 6)
     |> unique_constraint(:email)
     |> unique_constraint(:username)
@@ -37,7 +39,8 @@ defmodule Loadmaster.User do
 
   def update_changeset(model, params) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+    |> validate_required(@required_fields)
     |> validate_length(:password, min: 6)
     |> unique_constraint(:email)
     |> unique_constraint(:username)

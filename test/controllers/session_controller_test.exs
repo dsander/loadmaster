@@ -22,7 +22,7 @@ defmodule Loadmaster.SessionControllerTest do
 
   test "#delete signs the user out" do
     user = insert_user(username: "admin")
-    conn = assign(conn(), :current_user, user)
+    conn = assign(build_conn(), :current_user, user)
     conn = delete conn, session_path(conn, :delete, user)
     logged_out = get(conn, "/")
 

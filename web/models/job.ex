@@ -7,11 +7,10 @@ defmodule Loadmaster.Job do
     belongs_to :build, Loadmaster.Build
     belongs_to :image, Loadmaster.Image
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(state data image_id build_id)
-  @optional_fields ~w()
+  @required_fields [:state, :data, :image_id, :build_id]
   @initial_data %{
                   setup: %{state: "pending", output: []},
                   login: %{state: "pending", output: []},
@@ -27,17 +26,19 @@ defmodule Loadmaster.Job do
   If no params are provided, an invalid changeset is returned
   with no validation performed.
   """
-  def changeset(model, params \\ :empty) do
+  def changeset(model, params \\ %{}) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @required_fields)
+    |> validate_required(@required_fields)
     |> assoc_constraint(:build)
     |> assoc_constraint(:image)
   end
 
   def create_changeset(model, params) do
     model
-    |> cast(params, [:state, :image_id, :build_id], [])
+    |> cast(params, [:state, :image_id, :build_id])
     |> put_change(:data, @initial_data)
+    |> validate_required(@required_fields)
     |> assoc_constraint(:build)
     |> assoc_constraint(:image)
   end

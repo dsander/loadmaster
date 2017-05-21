@@ -2,7 +2,7 @@ defmodule Loadmaster.CommandRunnerTest do
   use Loadmaster.ModelCase
 
   setup do
-    repository = insert_repository
+    repository = insert_repository()
     build = insert_build(repository)
     image = insert_image(repository)
     job = insert_job(build, image)

@@ -4,7 +4,7 @@ services:
     image: jwilder/nginx-proxy
     restart: always
     ports:
-      - "80:80"
+      - "4001:80"
     volumes:
       - /var/run/docker.sock:/tmp/docker.sock:ro
 
@@ -22,16 +22,16 @@ services:
     depends_on:
       - db
       - nginx
-    image: "dsander/loadmaster:0.0.1"
+    image: "dsander/loadmaster:latest"
     restart: always
     environment:
-      RELX_REPLACE_OS_VARS: "true"
+      REPLACE_OS_VARS: 'true'
       DB_HOST: db
       DB_USER: loadmaster
       DB_PASSWORD: loadmaster
       DATABASE_NAME: loadmaster_prod
       PORT: "4000"
-      SECRET_KEY_BASE: "changeme"
+      SECRET_KEY_BASE: "changemechangemechangemechangemechangemechangemechangemechangeme"
       INVITATION_TOKEN: "try-loadmaster"
       VIRTUAL_HOST: "127.0.0.1.xip.io"
     volumes:

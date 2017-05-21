@@ -3,8 +3,8 @@ defmodule Loadmaster.BuildControllerTest do
 
   setup do
     user = insert_user(username: "admin")
-    conn = assign(conn(), :current_user, user)
-    repository = insert_repository
+    conn = assign(build_conn(), :current_user, user)
+    repository = insert_repository()
     {:ok, conn: conn, user: user, repository: repository}
   end
 

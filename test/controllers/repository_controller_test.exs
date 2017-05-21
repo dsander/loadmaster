@@ -8,7 +8,7 @@ defmodule Loadmaster.RepositoryControllerTest do
 
   setup do
     user = insert_user(username: "admin")
-    conn = assign(conn(), :current_user, user)
+    conn = assign(build_conn(), :current_user, user)
     {:ok, conn: conn, user: user}
   end
 

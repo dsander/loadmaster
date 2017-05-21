@@ -11,11 +11,11 @@ defmodule Loadmaster.Repository do
     has_many :images, Loadmaster.Image
     has_many :builds, Loadmaster.Build
 
-    timestamps
+    timestamps()
   end
 
-  @required_fields ~w(name docker_user docker_email docker_password)
-  @optional_fields ~w(github_token)
+  @required_fields [:name, :docker_user, :docker_email, :docker_password]
+  @allowed_fields (@required_fields ++ [:github_token])
 
   @doc """
   Creates a changeset based on the `model` and `params`.
@@ -25,18 +25,21 @@ defmodule Loadmaster.Repository do
   """
   def changeset(model) do
     model
-    |> cast(:empty, @required_fields, @optional_fields)
+    |> cast(%{}, @allowed_fields)
+    |> validate_required(@required_fields)
   end
 
   def changeset(model = %{token: nil}, params) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+    |> validate_required(@required_fields)
     |> create_token
   end
 
   def changeset(model, params) do
     model
-    |> cast(params, @required_fields, @optional_fields)
+    |> cast(params, @allowed_fields)
+    |> validate_required(@required_fields)
   end
 
   def create_token(model) do
